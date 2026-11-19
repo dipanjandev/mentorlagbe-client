@@ -85,7 +85,10 @@ const UserMenu = ({ user }: UserMenuProps) => {
           <DropdownMenuSeparator />
 
           <DropdownMenuItem className="cursor-pointer">
-            <Link href="/dashboard" className="flex items-center gap-2">
+            <Link
+              href={`/dashboard/${user?.role}`}
+              className="flex items-center gap-2"
+            >
               <LayoutDashboard className="h-4 w-4 text-slate-500" />
               <span>Dashboard</span>
             </Link>
