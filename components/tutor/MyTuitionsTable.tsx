@@ -8,7 +8,6 @@ import {
   DollarSign,
   ExternalLink,
   Filter,
-  Pencil,
   PlusCircle,
   Search,
   ToggleLeft,
@@ -17,8 +16,9 @@ import {
 import { ITuition } from "@/types"
 import { TuitionStatusBadge } from "./TuitionStatusBadge"
 import { DeleteTuitionDialog } from "./DeleteTuitionDialog"
-import { deleteJob } from "@/lib/actions/tuitions"
+import { deleteTuition } from "@/lib/actions/tuitions"
 import { toast } from "sonner"
+import { EditTuitionDialog } from "./EditTuitionDialog"
 
 interface MyTuitionsTableProps {
   initialTuitions: ITuition[]
@@ -63,19 +63,18 @@ export const MyTuitionsTable: React.FC<MyTuitionsTableProps> = ({
   }
 
   const handleDelete = async (id: string) => {
-    const res = await deleteJob(id)
+    const res = await deleteTuition(id)
     if (res.deletedCount > 0) {
       setTuitions((prev) => prev.filter((item) => item._id !== id))
       toast.success("Tuition deleted successfully!")
     }
   }
 
-  const handleEdit = (id?: string) => {
-    if (!id) return
-    // TODO: Implement Edit Modal open or redirect to Edit page
-    console.log("TODO: Open Edit modal or navigate to edit for tuition id:", id)
-    alert(
-      `TODO: Edit Tuition (ID: ${id}) - Plug in your Edit modal or update form here.`
+  const handleUpdate = (updatedTuition: ITuition) => {
+    setTuitions((prev) =>
+      prev.map((item) =>
+        item._id === updatedTuition._id ? updatedTuition : item
+      )
     )
   }
 
@@ -228,14 +227,10 @@ export const MyTuitionsTable: React.FC<MyTuitionsTableProps> = ({
                         </Link>
 
                         {/* Edit Button */}
-                        <button
-                          type="button"
-                          onClick={() => handleEdit(tuition._id)}
-                          className="rounded-lg p-2 text-muted-foreground transition hover:bg-muted hover:text-foreground"
-                          title="Edit Tuition"
-                        >
-                          <Pencil className="size-4" />
-                        </button>
+                        <EditTuitionDialog
+                          tuition={tuition}
+                          onUpdate={handleUpdate}
+                        />
 
                         {/* Delete Button */}
                         <DeleteTuitionDialog
