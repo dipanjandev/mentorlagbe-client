@@ -17,7 +17,7 @@ export interface IUser {
 }
 
 export interface ITuition {
-  _id: string
+  _id?: string
   title: string
   subject: string
   classLevel: string
@@ -27,10 +27,10 @@ export interface ITuition {
   daysPerWeek: number
   bannerImage: string
   description: string
-  tutorName: string
-  tutorEmail: string
-  approvalStatus: TApprovalStatus
-  isActive: boolean
+  tutorName?: string
+  tutorEmail?: string
+  approvalStatus?: TApprovalStatus
+  isActive?: boolean
   createdAt?: string
 }
 

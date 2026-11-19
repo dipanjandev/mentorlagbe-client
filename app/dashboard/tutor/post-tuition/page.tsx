@@ -12,8 +12,13 @@ import {
   Sparkles,
   Upload,
 } from "lucide-react"
+import { createTuition } from "@/lib/actions/tuitions"
+import { TTuitionMode } from "@/types"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const PostTuitionPage = () => {
+  const router = useRouter()
   const [imagePreview, setImagePreview] = useState<string | null>(null)
 
   // Handle image selection preview
@@ -27,27 +32,48 @@ const PostTuitionPage = () => {
   }
 
   // Form submission handler using standard FormData
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const formData = new FormData(e.currentTarget)
+    const imageFile = formData.get("bannerImage") as File
+
+    // imagebb তে আপলোডের প্রসেস এবং লিংক বের করার কাজ।
+    const imgFormData = new FormData()
+    imgFormData.append("image", imageFile)
+    const imgRes = await fetch(
+      `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+      {
+        method: "POST",
+        body: imgFormData,
+      }
+    )
+    const imgData = await imgRes.json()
+    const bannerImage = imgData.data.display_url
 
     // Requirement-aligned collected data object
     const tuitionData = {
       title: formData.get("title") as string,
       subject: formData.get("subject") as string,
       classLevel: formData.get("classLevel") as string,
-      mode: formData.get("mode") as string, // 'Online' | 'Offline'
+      //   এখানে TTuitionMode দিয়ে টাইপ দেয়া হল।
+      mode: formData.get("mode") as TTuitionMode,
       location: formData.get("location") as string,
       monthlyFee: Number(formData.get("monthlyFee")),
       daysPerWeek: Number(formData.get("daysPerWeek")),
-      bannerImage: formData.get("bannerImage") as File, // Image file for ImgBB upload
+      bannerImage,
       description: formData.get("description") as string,
     }
 
-    console.log("Collected Tuition Data ready for API / ImgBB:", tuitionData)
+    // console.log("Collected Tuition Data ready for API / ImgBB:", tuitionData)
 
     // TODO: Apply your custom functionality here (e.g., ImgBB upload & API call)
+    const result = await createTuition(tuitionData)
+    // console.log(result)
+    if (result.insertedId) {
+      toast.success("Tuition posted successfully!")
+      router.push("/dashboard/tutor/my-tuitions")
+    }
   }
 
   return (
