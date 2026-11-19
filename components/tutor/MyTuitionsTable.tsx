@@ -17,6 +17,8 @@ import {
 import { ITuition } from "@/types"
 import { TuitionStatusBadge } from "./TuitionStatusBadge"
 import { DeleteTuitionDialog } from "./DeleteTuitionDialog"
+import { deleteJob } from "@/lib/actions/tuitions"
+import { toast } from "sonner"
 
 interface MyTuitionsTableProps {
   initialTuitions: ITuition[]
@@ -60,10 +62,12 @@ export const MyTuitionsTable: React.FC<MyTuitionsTableProps> = ({
     )
   }
 
-  const handleDelete = (id?: string) => {
-    // TODO: Implement Delete Tuition API Call
-    // DELETE /api/tuitions/:id
-    console.log("TODO: Call DELETE API for tuition id:", id)
+  const handleDelete = async (id: string) => {
+    const res = await deleteJob(id)
+    if (res.deletedCount > 0) {
+      setTuitions((prev) => prev.filter((item) => item._id !== id))
+      toast.success("Tuition deleted successfully!")
+    }
   }
 
   const handleEdit = (id?: string) => {

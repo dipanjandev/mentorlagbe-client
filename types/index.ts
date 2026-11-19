@@ -17,7 +17,7 @@ export interface IUser {
 }
 
 export interface ITuition {
-  _id?: string
+  _id: string
   title: string
   subject: string
   classLevel: string

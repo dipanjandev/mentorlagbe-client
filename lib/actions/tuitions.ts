@@ -12,3 +12,10 @@ export const createTuition = async (data: ITuition) => {
   })
   return res.json()
 }
+
+export const deleteJob = async (tuitionId: string) => {
+  const res = await fetch(`${BASE_URL}/tuitions/${tuitionId}`, {
+    method: "DELETE",
+  })
+  return res.json()
+}
