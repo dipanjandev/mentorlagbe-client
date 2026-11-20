@@ -16,8 +16,11 @@ import { createTuition } from "@/lib/actions/tuitions"
 import { TTuitionMode } from "@/types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { useSession } from "@/lib/auth-client"
 
 const PostTuitionPage = () => {
+  const { data: session } = useSession()
+
   const router = useRouter()
   const [imagePreview, setImagePreview] = useState<string | null>(null)
 
@@ -63,6 +66,9 @@ const PostTuitionPage = () => {
       daysPerWeek: Number(formData.get("daysPerWeek")),
       bannerImage,
       description: formData.get("description") as string,
+      // এখানে সেশন এর থেকে ইমেই এবং টিউটর এর নাম ডাটাবেজ এ পাঠানো হল।
+      tutorName: session?.user.name,
+      tutorEmail: session?.user.email,
     }
 
     // console.log("Collected Tuition Data ready for API / ImgBB:", tuitionData)
