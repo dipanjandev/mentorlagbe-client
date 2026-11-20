@@ -4,7 +4,7 @@ import { ITuition } from "@/types"
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 // টিউশন তৈরি করার জন্য।
-export const createTuition = async (data: ITuition) => {
+export const createTuition = async (data: Omit<ITuition, "_id"> | ITuition) => {
   const res = await fetch(`${BASE_URL}/tuitions`, {
     method: "POST",
     headers: {
