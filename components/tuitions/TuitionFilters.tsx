@@ -60,7 +60,7 @@ export const TuitionFilters = () => {
     }
 
     // ফিল্টার বদলালে 1 নাম্বার পেজে নিয়ে যাবে।
-    params.delete(name)
+    params.delete("page")
 
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`)

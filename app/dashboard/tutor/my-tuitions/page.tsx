@@ -5,8 +5,9 @@ import { getTutionApi } from "@/lib/api/getTuition"
 
 const MyTuitionsPage = async () => {
   // TODO: Fetch real tuitions created by the logged-in tutor on the server
-  const tuitions = await getTutionApi()
+  const data = await getTutionApi()
   //   console.log(tuitions)
+  const tuitionsList = Array.isArray(data?.tuitions) ? data.tuitions : []
 
   return (
     <div className="p-8">
@@ -36,9 +37,8 @@ const MyTuitionsPage = async () => {
           <span>Post New Tuition</span>
         </Link>
       </div>
-
       {/* Reusable Client Component Table */}
-      <MyTuitionsTable initialTuitions={tuitions} />
+      <MyTuitionsTable initialTuitions={tuitionsList} />
     </div>
   )
 }

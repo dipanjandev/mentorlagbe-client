@@ -30,6 +30,7 @@ export const MyTuitionsTable: React.FC<MyTuitionsTableProps> = ({
   const [tuitions, setTuitions] = useState<ITuition[]>(initialTuitions)
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState<string>("all")
+  console.log(initialTuitions)
 
   // Filter tuitions based on search input and admin status
   const filteredTuitions = tuitions.filter((t) => {
