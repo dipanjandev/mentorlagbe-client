@@ -17,3 +17,11 @@ export const getTutionApi = async (query = ""): Promise<ITuitionResponse> => {
   })
   return res.json()
 }
+
+// Signle Data আনার জন্য এপিআই।
+export const getSingleTuitionApi = async (id: string): Promise<ITuition> => {
+  const res = await fetch(`${BASE_URL}/tuitions/${id}`, {
+    cache: "no-store",
+  })
+  return res.json()
+}
