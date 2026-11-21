@@ -14,7 +14,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 > **Assignment:** Category 001 | Assignment 9  
 > **Reference Video:** `b-14-a-9-cat-001.mp4` *(Always prioritize this specification document over video discrepancies)*  
 > **Theme:** EdTech / Online & Home Tuition Finder and Booking Platform  
-> **Last Updated:** November 2026
+> **Last Updated:** November 2026 (Live Audit & Sprint Plan)
 
 ---
 
@@ -32,8 +32,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 | Stakeholder | Role Key | Primary Capabilities |
 | :--- | :--- | :--- |
-| **Student** | `'student'` | Search & filter tuitions, view details, apply for sessions, track application statuses, bookmark tuitions, submit ratings/reviews, upgrade to Pro. |
-| **Tutor** | `'tutor'` | Create tuition listings (with ImgBB image upload), manage active/closed status, edit/delete tuitions, review incoming student applications (accept/reject), upgrade to Pro. |
+| **Student** | `'student'` | Search & filter tuitions, view details, apply for sessions, track application statuses, bookmark tuitions, submit ratings/reviews, upgrade to Pro ($10). |
+| **Tutor** | `'tutor'` | Create tuition listings (with ImgBB image upload), manage active/closed status, edit/delete tuitions, review incoming student applications (accept/reject), upgrade to Pro ($15). |
 | **Admin** | `'admin'` | Moderate tuition listings (approve/reject), manage all users and roles, inspect Stripe revenue transactions, view system-wide analytics. |
 
 ---
@@ -42,18 +42,18 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ### Frontend (Client)
 - **Framework:** Next.js (App Router, React 19, TypeScript)
-- **Styling & UI:** Tailwind CSS v4, Shadcn UI / HeroUI / DaisyUI, Lucide React icons
+- **Styling & UI:** Tailwind CSS v4, Shadcn UI, Lucide React icons (*DaisyUI is strictly avoided*)
 - **Theming:** `next-themes` (Dark/Light mode support)
-- **Notifications:** `sonner` / `react-hot-toast` for rich toast notifications
-- **Image Hosting:** Direct multipart image upload to **ImgBB API**
+- **Notifications:** `sonner` for rich toast notifications
+- **Image Hosting:** Direct multipart image upload to **ImgBB API** (`NEXT_PUBLIC_IMGBB_API_KEY`)
 - **Payments UI:** Stripe Checkout client redirect & status callbacks
 
 ### Backend (Server)
-- **Runtime & Framework:** Node.js, Express.js (TypeScript or JavaScript)
-- **Database:** MongoDB (Native Driver / Mongoose)
+- **Runtime & Framework:** Node.js, Express.js (ES Modules)
+- **Database:** MongoDB Native Driver (`mentorlagbe-db`)
 - **Authentication:** **BetterAuth** with MongoDB Adapter + Client-side JWT integration
 - **Authorization:** Custom Express middlewares (`verifyToken`, `verifyStudent`, `verifyTutor`, `verifyAdmin`)
-- **Payment Processing:** **Stripe** Checkout Sessions & Stripe Webhooks (raw body signature verification)
+- **Payment Processing:** **Stripe** Checkout Sessions & Webhooks
 
 ---
 
@@ -61,7 +61,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 The database schema is strictly structured around **four (4) core collections**:
 
-### 1. `users` Collection
+### 1. `user` / `users` Collection
 Stores all registered accounts, role configurations, profile details, and subscription tiers.
 ```typescript
 interface User {
@@ -139,191 +139,96 @@ interface Payment {
 
 ---
 
-## 🔄 End-to-End Logical Business Workflow
+## 📊 Live Implementation Status Matrix
 
-```mermaid
-flowchart TD
-    A["User Signs Up via BetterAuth\n(Chooses role: student | tutor)\nplan: 'free'"] --> B{"User Role"}
-    
-    %% Tutor Flow
-    B -->|Tutor| T1["Tutor creates Tuition Post\n(ImgBB banner upload)\napprovalStatus: 'pending'"]
-    T1 --> T2{"Plan Check"}
-    T2 -->|Free Plan| T3["Max 2 posts allowed"]
-    T2 -->|Pro Plan| T4["Unlimited posts allowed"]
-    T3 & T4 --> M1["Admin Reviews in Admin Dashboard\n(approvalStatus -> 'approved' | 'rejected')"]
-    
-    %% Student Flow
-    B -->|Student| S1["Browses Approved & Active Tuitions\n(/tuitions)"]
-    M1 -->|approved & isActive: true| S1
-    S1 --> S2["Views Tuition Details (/tuitions/:id)"]
-    S2 --> S3["Submits Application Form\n(Phone, Schedule, Note)\nstatus: 'pending'"]
-    S3 --> S4["Duplicate check prevents applying twice"]
-    S4 --> T5["Tutor manages Applicants in Dashboard\n(Updates status to 'accepted' | 'rejected')"]
-    
-    %% Payment Flow
-    B -->|Any User| P1["Purchases Pro Upgrade via Stripe\n(Tutor $15, Student $10)"]
-    P1 --> P2["Stripe Checkout -> Webhook / Verification"]
-    P2 --> P3["Update users.plan = 'pro'\nInsert record into payments collection"]
-```
+### Public Pages
+| Route | Feature / Requirement | Status | Notes |
+| :--- | :--- | :---: | :--- |
+| `/` | **Home Landing Page** | ⚠️ Incomplete | Currently only `<NavBar />`. Needs Hero, 6 Featured Tuitions, Pricing teaser, How It Works, Top Subjects/Stats, & Footer. |
+| `/tuitions` | **Browse Tuitions** | ✅ Done | Server-side Search & Filter (Challenge 1) + Server-side Pagination (Optional 1). |
+| `/tuitions/[id]` | **Tuition Details** | ✅ Done | Full details + Student Apply Modal with duplicate protection. |
+| `/pricing` | **Pricing & Pro Plans** | ✅ Done | Conditional rendering based on role (Student $10, Tutor $15, Admin view-only disabled, Guest both). |
+| `/sign-in` | **Authentication Sign-in** | ✅ Done | Form validation & BetterAuth integration. |
+| `/sign-up` | **Authentication Sign-up** | ✅ Done | Role selector (Student/Tutor), defaults plan to 'free'. |
+| `/payment/success` | **Stripe Success Callback** | ✅ Done | Verifies session & updates state. |
+| `/payment/cancel` | **Stripe Cancel Callback** | ✅ Done | Safe return with alert. |
 
-### Step-by-Step Business Logic:
-1. **Role Registration:**
-   - User signs up on `/sign-up` specifying role (`student` or `tutor`).
-   - Saved with initial `plan: 'free'`.
-2. **Posting a Tuition:**
-   - Tutor creates tuition via `/dashboard/tutor/post-tuition`.
-   - **Post Limit Rules:** Free tutors can post at most **2 tuitions**; Pro tutors can post **unlimited**.
-   - Created with `approvalStatus: 'pending'` and `isActive: true`.
-3. **Admin Moderation:**
-   - Admin inspects pending listings at `/dashboard/admin/tuitions`.
-   - Admin approves or rejects. Only listings with `approvalStatus === 'approved'` AND `isActive === true` appear on `/tuitions` and `/` featured section.
-4. **Student Application:**
-   - Student visits `/tuitions/[id]`.
-   - Non-students (Tutors/Admins/Unauthenticated) cannot submit (button disabled or hidden with explanatory message).
-   - Prevents duplicate applications from the same student for the same tuition ID.
-   - Status defaults to `'pending'`.
-5. **Tutor Applicant Management:**
-   - Tutor accesses `/dashboard/tutor/applicants` to review student submissions and sets status to `'accepted'` or `'rejected'`.
-6. **Stripe Subscription Upgrade:**
-   - Tutors upgrade to Pro for **$15** (unlimited posts + verified badge).
-   - Students upgrade to Pro for **$10** (priority booking).
-   - Stripe webhook verifies session, logs transaction into `payments`, and sets user `plan = 'pro'`.
+### Global Layout & Fallbacks
+| Component / File | Purpose | Status | Notes |
+| :--- | :--- | :---: | :--- |
+| `components/NavBar.tsx` | Header navigation | 🟡 Needs tweak | Needs Theme Toggle (Dark/Light) and link update for `/dashboard/profile`. |
+| `components/Footer.tsx` | Footer navigation & brand | ❌ Missing | Needs logo, tagline, links, contact, copyright, & **new 𝕏 logo**. |
+| `app/loading.tsx` | Global loading skeleton / spinner | ❌ Missing | Required for 100% mark. |
+| `app/not-found.tsx` | Custom 404 page | ❌ Missing | Required with "Back to Home" button. |
+| `app/error.tsx` | Custom error boundary | ❌ Missing | Required with "Back to Home" button. |
 
----
+### Student Dashboard (`/dashboard/student`)
+| Route | Feature | Status | Notes |
+| :--- | :--- | :---: | :--- |
+| `/dashboard/student` | **Overview** | ⚠️ Placeholder | Currently `<h1>Student Dashboard Page</h1>`. Needs stats cards. |
+| `/dashboard/student/my-applications` | **My Applications** | ✅ Done | Table view with status badges and cancel action. |
 
-## 🗺️ Layout, Pages & Route Architecture
+### Tutor Dashboard (`/dashboard/tutor`)
+| Route | Feature | Status | Notes |
+| :--- | :--- | :---: | :--- |
+| `/dashboard/tutor` | **Overview** | ⚠️ Placeholder | Currently `<h1>Tutor Dashboard Page</h1>`. Needs stats cards. |
+| `/dashboard/tutor/post-tuition` | **Post Tuition** | ✅ Done | Validated form, ImgBB direct upload, free tier limit check (max 2). |
+| `/dashboard/tutor/my-tuitions` | **My Created Tuitions** | ✅ Done | Full CRUD: edit, delete, toggle active/closed. |
+| `/dashboard/tutor/applicants` | **Manage Applicants** | ✅ Done | Accept/Reject student applications. |
 
-### 1. Navigation & Global Layout
-- **Navbar:**
-  - Consistent branding and logo: **MentorLagbe**.
-  - Public Links: Home (`/`), Browse Tuitions (`/tuitions`), Pricing / Pro Plans (`/pricing`), How It Works / About.
-  - **Unauthenticated View:** 'Sign In' and 'Sign Up' action buttons.
-  - **Authenticated View:** User Avatar, Full Name, Role Badge (`Student` / `Tutor` / `Admin`), 'Dashboard' link, 'Update Profile' link, 'Sign Out' button.
-- **Footer:**
-  - MentorLagbe logo, concise tagline, navigation quick-links, contact info (email, phone, address).
-  - Copyright notices and social media icons (MUST use the **new 𝕏 logo**, NOT the deprecated Twitter bird).
+### Admin Dashboard (`/dashboard/admin`)
+| Route | Feature | Status | Notes |
+| :--- | :--- | :---: | :--- |
+| `/dashboard/admin` | **Overview** | ⚠️ Placeholder | Currently `<h1>Admin Dashboard Page</h1>`. Needs stats cards. |
+| `/dashboard/admin/users` | **User Management** | ✅ Done | Pure Shadcn UI, stat cards, role changer, delete, search/filters. |
+| `/dashboard/admin/tuitions` | **Tuition Approval Flow** | ✅ Done | Pure Shadcn UI, stat cards, approve/reject actions, filters. |
+| `/dashboard/admin/transactions` | **Transactions** | ❌ Missing | Table of Stripe payments from `/payments` endpoint. |
 
-### 2. Public Pages
-- `/` — **Home Page:**
-  - Hero Section with headline, CTA leading to `/tuitions`, and modern graphic illustration.
-  - Dynamic Featured Tuitions: 6 latest approved & active listings from MongoDB (uniform card height & width).
-  - Pricing & Pro Subscription plans teaser.
-  - Extra Section 1: Visual 3-4 step workflow (*How MentorLagbe Works*).
-  - Extra Section 2: Top Subject Categories (Math, Physics, Programming, IELTS), platform statistics, and testimonials.
-- `/tuitions` — **Browse Tuitions Page:**
-  - Server-side search (by Title or Subject).
-  - Multi-parameter filter dropdowns (by Subject, Class Level, Mode: Online/Offline).
-  - Responsive grid of cards with equal dimensions.
-- `/tuitions/[id]` — **Tuition Details Page:**
-  - Banner image, title, subject, class level, schedule, location/mode, monthly fee, description, tutor profile summary.
-  - 'Apply for Tuition' modal/form (Students only; duplicate prevention applied).
-- `/pricing` — **Pricing & Pro Plans Page:**
-  - Feature comparison matrix between Free vs Pro for Tutors ($15) and Students ($10).
-  - Direct Stripe Checkout triggers.
-- `/sign-up` & `/sign-in` — **Auth Pages:**
-  - Form validations, email format, password length, role selection, toast errors.
-- `/payment/success` & `/payment/cancel` — **Stripe Redirection Pages:**
-  - Confirmation status, session verification, and navigation back to dashboard.
+### Shared Route (All Roles)
+| Route | Feature | Status | Notes |
+| :--- | :--- | :---: | :--- |
+| `/dashboard/profile` | **Update Profile** | ❌ Missing | Name, Phone, Bio, and ImgBB profile photo upload. |
 
-### 3. Dashboard Layout & Dynamic Role-Based Routes
-Common responsive shell with collapsible sidebar toggle, top bar, user profile summary, and role-guarded routes:
-
-#### 🧑‍🎓 Student Dashboard (`/dashboard/student`)
-- `/dashboard/student` — **Overview:**
-  - Summary stats: Total Applied Tuitions, Accepted Applications, Pending Applications, Current Plan (`Free` / `Pro`).
-- `/dashboard/student/my-applications` — **My Applications:**
-  - Table or card grid: Tuition Title, Tutor Name & Email, Monthly Fee, Applied Date, Status Badge (`Pending` / `Accepted` / `Rejected`).
-  - Action: Cancel/Delete application only while `status === 'pending'`.
-- `/dashboard/student/saved-tuitions` — *(Optional Challenge)* Bookmarked/saved listings.
-
-#### 👨‍🏫 Tutor Dashboard (`/dashboard/tutor`)
-- `/dashboard/tutor` — **Overview:**
-  - Summary stats: Total Tuitions Posted, Active/Approved Tuitions, Total Applicants Received, Current Plan (`Free` / `Pro`).
-- `/dashboard/tutor/post-tuition` — **Post a Tuition:**
-  - Form validation: Title, Subject, Class Level, Mode, Location, Monthly Fee, Days/Week, Description, ImgBB Banner Upload.
-  - Strict post limit check (Free: max 2; Pro: unlimited).
-- `/dashboard/tutor/my-tuitions` — **My Created Tuitions (Full CRUD):**
-  - List with approval status badges (`pending`, `approved`, `rejected`) and active switch.
-  - Edit/Update tuition details, Delete tuition, Toggle status (`Active` / `Closed`).
-- `/dashboard/tutor/applicants` — **Manage Applicants:**
-  - Table of applicant students: Student Name, Email, Phone, Preferred Schedule, Note, Tuition Title.
-  - Actions: Change status to `Accepted` or `Rejected`.
-
-#### 👑 Admin Dashboard (`/dashboard/admin`)
-- `/dashboard/admin` — **Overview:**
-  - Reusable stats cards: Total Users, Total Tutors, Pending vs Approved Tuitions, Total Stripe Revenue.
-- `/dashboard/admin/users` — **User Management:**
-  - List all registered users, manage/change user roles (`student`, `tutor`, `admin`).
-- `/dashboard/admin/tuitions` — **Tuition Approval Flow:**
-  - Moderation queue for tutor submissions with action to `Approve` or `Reject`.
-- `/dashboard/admin/transactions` — **Transaction Management:**
-  - Table of Stripe subscription payments: User Name, Email, Role, Plan Name, Amount, Transaction ID, Payment Date.
-
-#### ⚙️ Shared Protected Route (All Authenticated Roles)
-- `/dashboard/profile` — **Update Profile:**
-  - Form to update Name, Phone, Bio, and direct ImgBB profile photo upload (or image URL fallback).
+### Backend API (`mentorlagbe-server`)
+| Endpoint | Method | Status | Notes |
+| :--- | :---: | :---: | :--- |
+| `/users` | `GET` | ✅ Done | Fetch all users. |
+| `/users/:id/role` | `PATCH` | ✅ Done | Update user role. |
+| `/users/:id` | `DELETE` | ✅ Done | Delete user. |
+| `/tuitions` | `POST`, `GET` | ✅ Done | Create, search, filter, paginate tuitions. |
+| `/tuitions/count` | `GET` | ✅ Done | Count tuitions for limit checks. |
+| `/tuitions/:id` | `GET`, `PATCH`, `DELETE` | ✅ Done | Single tuition CRUD. |
+| `/applications` | `POST`, `GET` | ✅ Done | Submit with duplicate guard, fetch by tutor/student. |
+| `/applications/:id` | `PATCH` | ✅ Done | Accept/Reject application. |
+| `/payments` | `GET` | ✅ Done | Fetch all Stripe transaction logs. |
+| **Middlewares** | `verifyToken`, `verifyRole` | ❌ Pending | **Challenge 2**: JWT & role verification middlewares. |
+| **Seed Data** | Script / Endpoint | ❌ Pending | 10-12 realistic tuition listings for rich display. |
 
 ---
 
-## 🛡️ Backend Middleware & Security Specifications
-
-### Express Middlewares:
-1. `verifyToken`: Decodes and validates JWT token passed in `Authorization: Bearer <token>`. Attaches decoded payload `req.user` (`email`, `role`, `id`).
-2. `verifyStudent`: Asserts `req.user.role === 'student'`. Returns 403 Forbidden otherwise.
-3. `verifyTutor`: Asserts `req.user.role === 'tutor'`. Returns 403 Forbidden otherwise.
-4. `verifyAdmin`: Asserts `req.user.role === 'admin'`. Returns 403 Forbidden otherwise.
+## 📈 Git Commit Tracking
+- **Client Commits:** **19** (Target: Minimum 20. Needs 1+ more commit).
+- **Server Commits:** **14** (Target: Minimum 12. Already satisfied!).
 
 ---
 
-## 🏆 Mandatory Challenges
+## 🏆 Mandatory & Optional Challenges Checklist
 
-1. **Challenge 1: Server-Side Search & Filter on `/tuitions`**
-   - Dynamic query handling on the backend using MongoDB `$regex` for Title/Subject and direct matching for `classLevel` and `mode`.
-2. **Challenge 2: JWT Token Verification & Role-Based Middlewares**
-   - Secure all private API endpoints using `verifyToken` and role middlewares.
-3. **Challenge 3: Direct Image Uploading via ImgBB API**
-   - File upload integration using ImgBB API without requiring users to manually paste image URLs (used in Profile Update and Tutor Post Tuition).
-
----
-
-## 🌟 Optional Differentiators (Pick 2 to 5)
-
-- [ ] **1. Server-Side Pagination:** Skip/limit pagination on `/tuitions` with previous, next, and numbered buttons.
-- [ ] **2. AI Connected Seed Script:** Script/endpoint to seed 10-12+ realistic, interconnected tuitions, tutors, and sample applications.
-- [ ] **3. Bookmark / Saved Tuitions:** Save favorite tuitions into a dedicated tab in the Student Dashboard.
-- [ ] **4. Smooth Dark/Light Theme Toggle:** System-wide dark/light mode toggle in Navbar.
-- [ ] **5. Student Review & Rating System:** Students with `accepted` applications can leave 1-5 star reviews and feedback on tuition posts.
-
----
-
-## ⚠️ Critical Rules to Avoid Failing Marks (100% Mark Criteria)
-
-> [!CAUTION]
-> Failing to follow these rules will result in a **0 score**:
-> 1. **Commit Count:** Minimum **20 meaningful commits on client** AND **12 meaningful commits on server** with descriptive messages.
-> 2. **No Copied Designs:** Design must NOT mimic course conceptual session / module projects.
-> 3. **Production Deployment Quality:**
->    - Absolutely NO CORS errors, 404s, or 504 server errors on production.
->    - Live site must load smoothly on landing.
->    - **Reloading private routes while logged in must NOT redirect the user to login.**
->    - **Reloading any route directly in the browser must NOT throw errors.**
-> 4. **Credentials & Secrets:**
->    - Client secrets in `.env.local`
->    - Backend secrets (`MONGODB_URI`, `JWT_SECRET`, `STRIPE_SECRET_KEY`, `IMGBB_API_KEY`, etc.) in `.env`.
-> 5. **Error & Loading States:**
->    - Must implement `loading.tsx` / skeleton loaders.
->    - Must implement custom `not-found.tsx` and `error.tsx` with a 'Back to Home' button.
->    - All form submissions, auth actions, CRUD operations must trigger toast notifications (`sonner` / `react-hot-toast`).
+- [x] **Challenge 1: Server-Side Search & Filter on `/tuitions`** (Implemented in `index.js` and `app/tuitions/page.tsx`).
+- [ ] **Challenge 2: JWT Token Verification & Role-Based Middlewares** (Needs Express middleware setup).
+- [x] **Challenge 3: Image Uploading via ImgBB API** (Implemented in `post-tuition`; needs adding to profile update).
+- [x] **Optional 1: Server-Side Pagination** (Implemented on `/tuitions`).
+- [ ] **Optional 2: Realistic Seed Script** (To populate 10-12 sample tuitions across subjects).
+- [ ] **Optional 4: Smooth Dark/Light Theme Switcher** (Theme provider exists; add toggle to Navbar).
 
 ---
 
 ## 📋 Final Submission Checklist
 
-When handing over the project, ensure all items below are documented in `README.md` and submitted:
-- [ ] **Admin Email:** `...`
+- [ ] **Admin Email:** `admin@mentorlagbe.com` (or current admin account)
 - [ ] **Admin Password:** `...`
-- [ ] **Tutor Email & Password:** `...` (For quick testing)
-- [ ] **Live Site URL:** `...`
-- [ ] **Client GitHub Repository:** `...`
+- [ ] **Tutor Email & Password:** `tutor@mentorlagbe.com`
+- [ ] **Live Site URL:** Vercel deployment link
 - [ ] **Server GitHub Repository:** `...`
+- [ ] **Client GitHub Repository:** `...`
 - [ ] **README.md:** Containing project name, purpose, live URL, credentials, core features, and list of npm packages.

@@ -38,6 +38,21 @@ export const updateTuition = async (
   return res.json()
 }
 
+// টিউশনের অ্যাপ্রুভাল স্ট্যাটাস আপডেট করার জন্য (অ্যাডমিন মডারেশন)
+export const updateTuitionStatus = async (
+  tuitionId: string,
+  status: "approved" | "rejected" | "pending"
+) => {
+  const res = await fetch(`${BASE_URL}/tuitions/${tuitionId}/status`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ status }),
+  })
+  return res.json()
+}
+
 // টিউশন কাউন্ট করার জন্য এপিআই।
 export const getTuitionsCount = async (tutorEmail: string) => {
   const res = await fetch(
