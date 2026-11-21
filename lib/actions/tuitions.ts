@@ -37,3 +37,14 @@ export const updateTuition = async (
   })
   return res.json()
 }
+
+// টিউশন কাউন্ট করার জন্য এপিআই।
+export const getTuitionsCount = async (tutorEmail: string) => {
+  const res = await fetch(
+    `${BASE_URL}/tuitions/count?tutorEmail=${tutorEmail}`,
+    {
+      cache: "no-store",
+    }
+  )
+  return res.json()
+}

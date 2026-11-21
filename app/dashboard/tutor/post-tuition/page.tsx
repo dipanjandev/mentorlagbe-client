@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   BookOpen,
   Calendar,
@@ -12,7 +12,7 @@ import {
   Sparkles,
   Upload,
 } from "lucide-react"
-import { createTuition } from "@/lib/actions/tuitions"
+import { createTuition, getTuitionsCount } from "@/lib/actions/tuitions"
 import { TTuitionMode } from "@/types"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -23,6 +23,24 @@ const PostTuitionPage = () => {
 
   const router = useRouter()
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+
+  // পোষ্ট কাউন্টের জন্য স্টেট ডিক্লিয়ার করা হল।
+  const [postCount, setPostCount] = useState<number>(0)
+  const [isCheckingLimit, setIsCheckingLimit] = useState<boolean>(true)
+
+  // ইউজ ইফেক্ট দিয়ে এপিআই কল কার হল।
+  useEffect(() => {
+    if (session?.user?.email) {
+      getTuitionsCount(session.user.email)
+        .then((data) => {
+          setPostCount(data?.count || 0)
+        })
+        .finally(() => setIsCheckingLimit(false))
+    }
+  }, [session?.user?.email])
+
+  const isPro = session?.user?.plan === "pro"
+  const isLimitReached = !isPro && postCount >= 2
 
   // Handle image selection preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +55,13 @@ const PostTuitionPage = () => {
   // Form submission handler using standard FormData
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    // ছবি আপলোড হবে না যদি দুইটার বেশি পোষ্ট হয়ে যায় তাহলে।
+    if (isLimitReached) {
+      toast.error("Free plan allows maximum 2 tuition posts. Upgrade to Pro!")
+      router.push("/pricing")
+      return
+    }
 
     const formData = new FormData(e.currentTarget)
     const imageFile = formData.get("bannerImage") as File
@@ -104,7 +129,12 @@ const PostTuitionPage = () => {
         {/* Plan Limit Badge */}
         <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
           <Sparkles className="size-3.5" />
-          <span>Free Plan: 2 Posts Max | Pro Plan: Unlimited</span>
+          {/* যদি প্রো হয় তাহলে আনলিমিটেড এর ব্যাচ দেখাবে না হলে পোষ্ট কাউন্ট হবে। */}
+          <span>
+            {isPro
+              ? "Pro Plan: Unlimited Posts"
+              : `Free Plan: ${postCount} / 2 Posts Used`}
+          </span>{" "}
         </div>
       </div>
 
@@ -393,11 +423,17 @@ const PostTuitionPage = () => {
               Reset
             </button>
             <button
+              disabled={isCheckingLimit}
               type="submit"
               className="flex items-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-primary/90"
             >
               <Sparkles className="size-4" />
-              <span>Publish Tuition</span>
+              {/* যদি লিমিট শেষ হয়ে যায় তাহলে লিমিট রিচড দেখাবে। এবং পাবলিশ করতে দিবে না। */}
+              <span>
+                {isLimitReached
+                  ? "Limit Reached — Upgrade to Pro"
+                  : "Publish Tuition"}
+              </span>
             </button>
           </div>
         </form>
