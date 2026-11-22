@@ -1,4 +1,5 @@
 import React from "react"
+import type { Metadata } from "next"
 import Link from "next/link"
 import {
   ArrowLeft,
@@ -21,6 +22,27 @@ import { ApplyTuitionModal } from "@/components/tuitions/ApplyTuitionModal"
 
 interface TuitionDetailsPageProps {
   params: Promise<{ id: string }>
+}
+
+// ডাইনামিক মেটাডাটা: টিউশন অনুযায়ী ব্রাউজার ট্যাবের নাম ডায়নামিক করা
+export async function generateMetadata({
+  params,
+}: TuitionDetailsPageProps): Promise<Metadata> {
+  const { id } = await params
+  try {
+    const tuition = await getSingleTuitionApi(id)
+    if (tuition?.title) {
+      return {
+        title: `${tuition.title} (${tuition.subject})`,
+        description: tuition.description?.slice(0, 160) || "Tuition details on MentorLagbe.",
+      }
+    }
+  } catch (error) {
+    console.error("Error generating metadata:", error)
+  }
+  return {
+    title: "Tuition Details",
+  }
 }
 
 const TuitionDetailsPage = async ({ params }: TuitionDetailsPageProps) => {

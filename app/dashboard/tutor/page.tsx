@@ -1,4 +1,5 @@
 import React from "react"
+import type { Metadata } from "next"
 import Link from "next/link"
 import { headers } from "next/headers"
 import {
@@ -14,6 +15,11 @@ import { auth } from "@/lib/auth"
 import { getApplications } from "@/lib/actions/applications"
 import { getTutionApi } from "@/lib/api/getTuition"
 import { IApplication, ITuition } from "@/types"
+
+export const metadata: Metadata = {
+  title: "Tutor Dashboard",
+  description: "Monitor your created tuition batches and student applicant pipeline.",
+}
 
 // এই পেজটি টিউটরকে তার মোট পোস্ট করা টিউশন, অ্যাক্টিভ ব্যাচ, মোট আবেদনকারী ও সাম্প্রতিক আবেদনের লাইভ পরিসংখ্যান দেখায়
 const TutorDashboardPage = async () => {

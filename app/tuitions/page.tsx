@@ -1,4 +1,5 @@
 import React from "react"
+import type { Metadata } from "next"
 import Link from "next/link"
 import { BookOpen, GraduationCap, Sparkles } from "lucide-react"
 import { getTutionApi } from "@/lib/api/getTuition"
@@ -9,6 +10,11 @@ import { TuitionPagination } from "@/components/tuitions/TuitionPagination"
 import { Badge } from "@/components/ui/badge"
 import NavBar from "@/components/NavBar"
 import Footer from "@/components/Footer"
+
+export const metadata: Metadata = {
+  title: "Browse Tuitions",
+  description: "Search and filter through all verified online and home tuition batches.",
+}
 
 interface BrowseTuitionsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>

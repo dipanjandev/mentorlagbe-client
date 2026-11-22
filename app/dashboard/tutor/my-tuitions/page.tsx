@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { headers } from "next/headers"
 import { BookOpen, PlusCircle } from "lucide-react"
@@ -5,6 +6,11 @@ import { MyTuitionsTable } from "@/components/tutor/MyTuitionsTable"
 import { getTutionApi } from "@/lib/api/getTuition"
 import { auth } from "@/lib/auth"
 import { ITuition } from "@/types"
+
+export const metadata: Metadata = {
+  title: "My Created Tuitions",
+  description: "Manage, edit, delete, and control availability of your tuition offerings.",
+}
 
 /**
  * MyTuitionsPage (Tutor Dashboard)

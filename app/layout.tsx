@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import "./globals.css"
@@ -11,6 +12,18 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+export const metadata: Metadata = {
+  title: {
+    default: "MentorLagbe - Smart Tuition & Mentorship Platform",
+    template: "%s | MentorLagbe",
+  },
+  description:
+    "Find verified subject-wise tutors and academic mentors for Class 1-12, O/A-Levels, and University Admission across Bangladesh.",
+  icons: {
+    icon: "/favicon.ico",
+  },
+}
 
 export default function RootLayout({
   children,

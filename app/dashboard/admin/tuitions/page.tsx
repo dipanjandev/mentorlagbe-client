@@ -20,6 +20,7 @@ const TuitionApprovalPage = () => {
 
   // ১. পেজ লোড হওয়ার সাথে সাথে ব্যাকএন্ড থেকে সব টিউশন লোড করা (isAdmin=true পাঠিয়ে)
   useEffect(() => {
+    document.title = "Tuition Approval & Monitoring | MentorLagbe"
     const fetchAllTuitions = async () => {
       try {
         setLoading(true)

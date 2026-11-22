@@ -1,4 +1,5 @@
 import React from "react"
+import type { Metadata } from "next"
 import Link from "next/link"
 import { headers } from "next/headers"
 import {
@@ -14,6 +15,11 @@ import {
 import { auth } from "@/lib/auth"
 import { getApplications } from "@/lib/actions/applications"
 import { IApplication } from "@/types"
+
+export const metadata: Metadata = {
+  title: "Student Dashboard",
+  description: "Track your tuition applications and learning progress.",
+}
 
 // এই পেজটি স্টুডেন্টকে তার সর্বমোট আবেদন, গৃহীত ও অপেক্ষমান আবেদনের সংখ্যা এবং সাম্প্রতিক আবেদনের সারাংশ দেখায়
 const StudentDashboardPage = async () => {

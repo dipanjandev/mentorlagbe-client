@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { headers } from "next/headers"
 import {
@@ -12,6 +13,11 @@ import {
 import { auth } from "@/lib/auth"
 import { getApplications } from "@/lib/actions/applications"
 import { IApplication, TApplicationStatus } from "@/types"
+
+export const metadata: Metadata = {
+  title: "My Applications",
+  description: "Review and manage all your submitted tuition applications.",
+}
 
 const statusStyles: Record<
   TApplicationStatus,

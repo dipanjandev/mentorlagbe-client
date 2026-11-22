@@ -1,4 +1,5 @@
 import React from "react"
+import type { Metadata } from "next"
 import Link from "next/link"
 import {
   Users,
@@ -15,6 +16,11 @@ import { getAllUsers, IUser } from "@/lib/actions/users"
 import { getTutionApi } from "@/lib/api/getTuition"
 import { getAllPayments } from "@/lib/actions/payments"
 import { ITuition, IPayment } from "@/types"
+
+export const metadata: Metadata = {
+  title: "Admin Dashboard",
+  description: "Platform-wide governance, analytics, and revenue management.",
+}
 
 // এই পেজটি এডমিনকে পুরো প্ল্যাটফর্মের ইউজার, টিউটর, টিউশন অ্যাপ্রুভাল স্ট্যাটাস এবং মোট আয়ের সারাংশ দেখায়
 const AdminDashboardPage = async () => {

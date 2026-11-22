@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { headers } from "next/headers"
 import {
   Users,
@@ -12,6 +13,11 @@ import { auth } from "@/lib/auth"
 import { getApplications } from "@/lib/actions/applications"
 import { IApplication, TApplicationStatus } from "@/types"
 import { ApplicationStatusActions } from "@/components/tutor/ApplicationStatusActions"
+
+export const metadata: Metadata = {
+  title: "Manage Applicants",
+  description: "Review and accept or reject student tuition applications.",
+}
 
 const statusStyles: Record<
   TApplicationStatus,
