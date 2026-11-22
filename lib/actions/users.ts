@@ -9,6 +9,8 @@ export interface IUser {
   role: "student" | "tutor" | "admin"
   plan?: "free" | "pro"
   image?: string
+  phone?: string
+  bio?: string
 }
 
 // সব ইউজারের তালিকা আনার জন্য।
@@ -36,6 +38,27 @@ export const updateUserRole = async (
 export const deleteUser = async (id: string) => {
   const res = await fetch(`${BASE_URL}/users/${id}`, {
     method: "DELETE",
+  })
+  return res.json()
+}
+
+// ইমেইল দিয়ে ইউজারের প্রোফাইল আনার জন্য।
+export const getUserByEmail = async (email: string): Promise<IUser | null> => {
+  const res = await fetch(`${BASE_URL}/users/${email}`, {
+    cache: "no-store",
+  })
+  return res.json()
+}
+
+// প্রোফাইল আপডেট করার জন্য
+export const updateUserProfile = async (
+  email: string,
+  payload: { name: string; phone: string; bio: string; image: string }
+) => {
+  const res = await fetch(`${BASE_URL}/users/${email}`, {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload),
   })
   return res.json()
 }
