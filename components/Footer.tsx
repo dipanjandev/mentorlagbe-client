@@ -1,11 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Sparkles,
-} from "lucide-react"
+import { Mail, Phone, MapPin, Sparkles } from "lucide-react"
 import Logo from "@/components/Logo"
 
 // রিকোয়ারমেন্ট অনুযায়ী Footer Component:
@@ -20,9 +15,10 @@ const Footer: React.FC = () => {
           {/* কলাম ১ ও ২: ব্র্যান্ড ও পরিচিতি */}
           <div className="space-y-4 lg:col-span-2">
             <Logo />
-            <p className="max-w-sm text-sm text-muted-foreground leading-relaxed">
-              MentorLagbe is Bangladesh&apos;s smart tuition finder &amp; 1-on-1 academic
-              mentorship platform connecting students with verified subject specialists.
+            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+              MentorLagbe is Bangladesh&apos;s smart tuition finder &amp; 1-on-1
+              academic mentorship platform connecting students with verified
+              subject specialists.
             </p>
 
             {/* সোশ্যাল মিডিয়া লিঙ্কস (নতুন 𝕏 লোগো সহ) */}
@@ -72,7 +68,7 @@ const Footer: React.FC = () => {
 
               {/* GitHub */}
               <a
-                href="https://github.com"
+                href="https://github.com/dipanjandev"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub Repository"
@@ -87,7 +83,7 @@ const Footer: React.FC = () => {
 
           {/* কলাম ৩: কুইক নেভিগেশন */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+            <h3 className="text-xs font-bold tracking-wider text-foreground uppercase">
               Navigation
             </h3>
             <ul className="space-y-2 text-sm">
@@ -128,7 +124,7 @@ const Footer: React.FC = () => {
 
           {/* কলাম ৪: পোর্টাল ও ড্যাশবোর্ডস */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+            <h3 className="text-xs font-bold tracking-wider text-foreground uppercase">
               Dashboards
             </h3>
             <ul className="space-y-2 text-sm">
@@ -169,7 +165,7 @@ const Footer: React.FC = () => {
 
           {/* কলাম ৫: কন্টাক্ট ইনফো (রিকোয়ারমেন্ট অনুযায়ী ইমেইল/ফোন/লোকেশন) */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+            <h3 className="text-xs font-bold tracking-wider text-foreground uppercase">
               Contact Us
             </h3>
             <ul className="space-y-2.5 text-xs text-muted-foreground">
@@ -179,34 +175,34 @@ const Footer: React.FC = () => {
                   href="mailto:support@mentorlagbe.com"
                   className="hover:underline"
                 >
-                  support@mentorlagbe.com
+                  dipanjan.shirso@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="size-4 shrink-0 text-primary" />
                 <a href="tel:+8801700123456" className="hover:underline">
-                  +880 1700-123456
+                  +880 1716-164345
                 </a>
               </li>
               <li className="flex items-start gap-2">
-                <MapPin className="size-4 shrink-0 text-primary mt-0.5" />
-                <span>Dhanmondi, Dhaka 1209, Bangladesh</span>
+                <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
+                <span>Madhyanagar, Sunamganj, Sylhet.</span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* বটম বার: কপিরাইট ও লিগ্যাল */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-8 sm:flex-row text-xs text-muted-foreground">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-8 text-xs text-muted-foreground sm:flex-row">
           <p>© 2026 MentorLagbe. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-primary transition">
+            <Link href="/privacy" className="transition hover:text-primary">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-primary transition">
+            <Link href="/terms" className="transition hover:text-primary">
               Terms of Service
             </Link>
-            <span className="inline-flex items-center gap-1 text-primary font-medium">
+            <span className="inline-flex items-center gap-1 font-medium text-primary">
               <Sparkles className="size-3" />
               <span>Smart Tuition Network</span>
             </span>

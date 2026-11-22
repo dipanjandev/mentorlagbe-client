@@ -144,7 +144,7 @@ interface Payment {
 ### Public Pages
 | Route | Feature / Requirement | Status | Notes |
 | :--- | :--- | :---: | :--- |
-| `/` | **Home Landing Page** | ⚠️ Incomplete | Currently only `<NavBar />`. Needs Hero, 6 Featured Tuitions, Pricing teaser, How It Works, Top Subjects/Stats, & Footer. |
+| `/` | **Home Landing Page** | ✅ Done | Modular sections: Hero, Featured Tuitions (from API), How It Works, Top Subjects, Pricing Teaser, & Platform Stats with Footer. |
 | `/tuitions` | **Browse Tuitions** | ✅ Done | Server-side Search & Filter (Challenge 1) + Server-side Pagination (Optional 1). |
 | `/tuitions/[id]` | **Tuition Details** | ✅ Done | Full details + Student Apply Modal with duplicate protection. |
 | `/pricing` | **Pricing & Pro Plans** | ✅ Done | Conditional rendering based on role (Student $10, Tutor $15, Admin view-only disabled, Guest both). |
