@@ -12,9 +12,7 @@ interface ITuitionResponse {
 // টিউশনগুলো আনার এপিআই।
 export const getTutionApi = async (query = ""): Promise<ITuitionResponse> => {
   // উপরে query দিলাম এবং ${query} এটা দিয়ে ব্যাকএন্ড এর কাছে পাঠিয়ে দিলাম।
-  const res = await fetch(`${BASE_URL}/tuitions?${query}`, {
-    cache: "no-store",
-  })
+  const res = await fetch(`${BASE_URL}/tuitions?${query}`)
   return res.json()
 }
 
