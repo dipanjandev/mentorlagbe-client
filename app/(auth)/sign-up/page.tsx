@@ -97,10 +97,10 @@ const SignUpPage = () => {
             <Logo />
           </div>
           <div className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-slate-900">
+            <CardTitle className="text-2xl font-bold text-foreground">
               Create an Account
             </CardTitle>
-            <CardDescription className="text-slate-600">
+            <CardDescription className="text-muted-foreground">
               Select your role and fill in your details to get started
             </CardDescription>
           </div>
@@ -110,15 +110,15 @@ const SignUpPage = () => {
           <form onSubmit={handleSignUp} className="space-y-4">
             {/* সবার উপরে: Role Selection Box (Student, Tutor, Admin) */}
             <div className="space-y-2">
-              <Label className="text-slate-700">Select Account Role</Label>
+              <Label className="text-foreground">Select Account Role</Label>
               <div className="grid grid-cols-3 gap-2.5">
                 <button
                   type="button"
                   onClick={() => setRole("student")}
                   className={`flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl border p-3 text-xs font-semibold transition ${
                     role === "student"
-                      ? "border-green-600 bg-green-50 text-green-700"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-green-300"
+                      ? "border-green-600 bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300"
+                      : "border-border bg-card text-muted-foreground hover:border-green-300 dark:hover:border-green-700"
                   }`}
                 >
                   <BookOpen className="h-4 w-4" />
@@ -130,8 +130,8 @@ const SignUpPage = () => {
                   onClick={() => setRole("tutor")}
                   className={`flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl border p-3 text-xs font-semibold transition ${
                     role === "tutor"
-                      ? "border-green-600 bg-green-50 text-green-700"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-green-300"
+                      ? "border-green-600 bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300"
+                      : "border-border bg-card text-muted-foreground hover:border-green-300 dark:hover:border-green-700"
                   }`}
                 >
                   <UserCheck className="h-4 w-4" />
@@ -143,8 +143,8 @@ const SignUpPage = () => {
                   onClick={() => setRole("admin")}
                   className={`flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl border p-3 text-xs font-semibold transition ${
                     role === "admin"
-                      ? "border-green-600 bg-green-50 text-green-700"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-green-300"
+                      ? "border-green-600 bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300"
+                      : "border-border bg-card text-muted-foreground hover:border-green-300 dark:hover:border-green-700"
                   }`}
                 >
                   <ShieldCheck className="h-4 w-4" />
@@ -211,13 +211,13 @@ const SignUpPage = () => {
                 {/* ডান পাশে: Upload Box */}
                 <label
                   htmlFor="photo"
-                  className="flex flex-1 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-3.5 transition hover:border-green-500 hover:bg-green-50/40"
+                  className="flex flex-1 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed border-border bg-muted/40 p-3.5 transition hover:border-green-500 hover:bg-green-50/20"
                 >
-                  <div className="rounded-full bg-green-100 p-1.5 text-green-600">
+                  <div className="rounded-full bg-green-100 dark:bg-green-950/50 p-1.5 text-green-600 dark:text-green-400">
                     <UploadCloud className="h-4 w-4" />
                   </div>
 
-                  <span className="text-center text-xs font-medium text-slate-600">
+                  <span className="text-center text-xs font-medium text-muted-foreground">
                     {uploading
                       ? "Uploading image..."
                       : imageUrl
@@ -246,12 +246,12 @@ const SignUpPage = () => {
           </form>
         </CardContent>
 
-        <CardFooter className="justify-center border-t border-slate-100 pt-4">
-          <p className="text-sm text-slate-600">
+        <CardFooter className="justify-center border-t border-border pt-4">
+          <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link
               href="/sign-in"
-              className="font-semibold text-green-600 hover:underline"
+              className="font-semibold text-green-600 dark:text-green-400 hover:underline"
             >
               Sign In
             </Link>

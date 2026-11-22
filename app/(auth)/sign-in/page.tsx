@@ -50,10 +50,10 @@ const SignInPage = () => {
             <Logo />
           </div>
           <div className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-slate-900">
+            <CardTitle className="text-2xl font-bold text-foreground">
               Welcome Back
             </CardTitle>
-            <CardDescription className="text-slate-600">
+            <CardDescription className="text-muted-foreground">
               Sign in to your MentorLagbe account to continue
             </CardDescription>
           </div>
@@ -97,12 +97,12 @@ const SignInPage = () => {
           </form>
         </CardContent>
 
-        <CardFooter className="justify-center border-t border-slate-100 pt-4">
-          <p className="text-sm text-slate-600">
+        <CardFooter className="justify-center border-t border-border pt-4">
+          <p className="text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
             <Link
               href="/sign-up"
-              className="font-semibold text-green-600 hover:underline"
+              className="font-semibold text-green-600 dark:text-green-400 hover:underline"
             >
               Sign Up
             </Link>

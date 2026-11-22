@@ -156,7 +156,7 @@ interface Payment {
 ### Global Layout & Fallbacks
 | Component / File | Purpose | Status | Notes |
 | :--- | :--- | :---: | :--- |
-| `components/NavBar.tsx` | Header navigation | ✅ Done | Responsive navbar, authenticated state via `UserMenu` (`/dashboard/profile` & Sign Out), and theme support. |
+| `components/NavBar.tsx` | Header navigation | ✅ Done | Polished floating glassmorphic navbar, integrated Theme Toggle (Dark/Light), UserMenu (`/dashboard/profile`), and responsive drawer. |
 | `components/Footer.tsx` | Footer navigation & brand | ✅ Done | Logo, tagline, links, contact info, copyright, & **new 𝕏 logo**. |
 | `app/loading.tsx` | Global loading skeleton / spinner | ✅ Done | Modern pulsing spinner with brand accent & shimmer bar. |
 | `app/not-found.tsx` | Custom 404 page | ✅ Done | Modern 404 page with 'Back to Home' & 'Browse Tuitions' buttons. |
@@ -220,7 +220,7 @@ interface Payment {
 - [x] **Challenge 3: Image Uploading via ImgBB API** (Implemented in both `post-tuition` and `/dashboard/profile`).
 - [x] **Optional 1: Server-Side Pagination** (Implemented on `/tuitions`).
 - [ ] **Optional 2: Realistic Seed Script** (To populate 10-12 sample tuitions across subjects).
-- [ ] **Optional 4: Smooth Dark/Light Theme Switcher** (Theme provider exists; add toggle to Navbar).
+- [x] **Optional 4: Smooth Dark/Light Theme Switcher** (Integrated ThemeToggle in Navbar with smooth Sun/Moon transitions).
 
 ---
 

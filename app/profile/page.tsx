@@ -157,13 +157,13 @@ const ProfilePage = () => {
           </div>
 
           <div className="space-y-1.5 text-center sm:text-left">
-            <h1 className="text-2xl font-bold text-gray-900">{name}</h1>
-            <p className="flex items-center justify-center gap-1.5 text-sm text-gray-500 sm:justify-start">
+            <h1 className="text-2xl font-bold text-foreground">{name}</h1>
+            <p className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground sm:justify-start">
               <Mail className="h-4 w-4" />
               {userEmail}
             </p>
             <div className="flex items-center justify-center gap-2 pt-1 sm:justify-start">
-              <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-700 capitalize">
+              <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 dark:bg-blue-950/50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:text-blue-300 capitalize">
                 <Shield className="h-3 w-3" />
                 {role}
               </span>
@@ -174,17 +174,17 @@ const ProfilePage = () => {
         {/* এডিট ফর্ম */}
         <form
           onSubmit={handleSubmit}
-          className="space-y-5 rounded-2xl border border-gray-200 bg-white p-6 shadow-xs"
+          className="space-y-5 rounded-2xl border border-border bg-card p-6 shadow-xs"
         >
-          <h2 className="border-b border-gray-100 pb-3 text-lg font-bold text-gray-900">
+          <h2 className="border-b border-border pb-3 text-lg font-bold text-foreground">
             Personal Information
           </h2>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             {/* Full Name */}
             <div className="space-y-1.5">
-              <label className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
-                <User className="h-4 w-4 text-gray-400" />
+              <label className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+                <User className="h-4 w-4 text-muted-foreground" />
                 Full Name
               </label>
               <input
@@ -193,14 +193,14 @@ const ProfilePage = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your full name"
-                className="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+                className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
               />
             </div>
 
             {/* Phone Number */}
             <div className="space-y-1.5">
-              <label className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
-                <Phone className="h-4 w-4 text-gray-400" />
+              <label className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+                <Phone className="h-4 w-4 text-muted-foreground" />
                 Phone Number
               </label>
               <input
@@ -208,27 +208,27 @@ const ProfilePage = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="e.g. +880 1700-000000"
-                className="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+                className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
               />
             </div>
           </div>
 
           {/* Email (Read-Only) */}
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-gray-700">
+            <label className="text-sm font-medium text-foreground">
               Email Address (Cannot be changed)
             </label>
             <input
               type="email"
               disabled
               value={userEmail || ""}
-              className="w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-50 px-3.5 py-2 text-sm text-gray-500"
+              className="w-full cursor-not-allowed rounded-lg border border-border bg-muted px-3.5 py-2 text-sm text-muted-foreground"
             />
           </div>
 
           {/* Bio */}
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-gray-700">
+            <label className="text-sm font-medium text-foreground">
               Bio / Academic Background
             </label>
             <textarea
@@ -236,7 +236,7 @@ const ProfilePage = () => {
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               placeholder="Write a short bio about your subjects, experience, or learning goals..."
-              className="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+              className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
             />
           </div>
 

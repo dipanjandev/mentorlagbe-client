@@ -8,7 +8,7 @@ const Logo = () => {
       <div className="rounded-xl bg-green-600 p-2 text-white shadow-xs">
         <GraduationCap className="h-6 w-6" />
       </div>
-      <span className="text-xl font-bold tracking-tight text-slate-900">
+      <span className="text-xl font-bold tracking-tight text-foreground">
         Mentor<span className="text-green-600">Lagbe</span>
       </span>
     </Link>
