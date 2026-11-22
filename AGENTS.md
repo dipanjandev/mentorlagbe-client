@@ -156,7 +156,7 @@ interface Payment {
 ### Global Layout & Fallbacks
 | Component / File | Purpose | Status | Notes |
 | :--- | :--- | :---: | :--- |
-| `components/NavBar.tsx` | Header navigation | 🟡 Needs tweak | Needs Theme Toggle (Dark/Light) and link update for `/dashboard/profile`. |
+| `components/NavBar.tsx` | Header navigation | ✅ Done | Responsive navbar, authenticated state via `UserMenu` (`/dashboard/profile` & Sign Out), and theme support. |
 | `components/Footer.tsx` | Footer navigation & brand | ✅ Done | Logo, tagline, links, contact info, copyright, & **new 𝕏 logo**. |
 | `app/loading.tsx` | Global loading skeleton / spinner | ✅ Done | Modern pulsing spinner with brand accent & shimmer bar. |
 | `app/not-found.tsx` | Custom 404 page | ✅ Done | Modern 404 page with 'Back to Home' & 'Browse Tuitions' buttons. |
@@ -198,10 +198,11 @@ interface Payment {
 | `/tuitions` | `POST`, `GET` | ✅ Done | Create, search, filter, paginate tuitions. |
 | `/tuitions/count` | `GET` | ✅ Done | Count tuitions for limit checks. |
 | `/tuitions/:id` | `GET`, `PATCH`, `DELETE` | ✅ Done | Single tuition CRUD. |
-| `/applications` | `POST`, `GET` | ✅ Done | Submit with duplicate guard, fetch by tutor/student. |
+| `/applications` | `POST`, `GET` | ✅ Done | Submit with duplicate guard, fetch by tutor/student. Client sends `Authorization: Bearer <token>` via `authFetch`. |
 | `/applications/:id` | `PATCH` | ✅ Done | Accept/Reject application. |
 | `/payments` | `GET` | ✅ Done | Fetch all Stripe transaction logs. |
-| **Middlewares** | `verifyToken`, `verifyRole` | ❌ Pending | **Challenge 2**: JWT & role verification middlewares. |
+| **Client Auth Helper** | `getToken`, `authFetch` | ✅ Done | Dual token resolution: reads `better-auth.session_token` cookie + `auth.api.getSession`, attaches `Authorization: Bearer <token>` header with `cache: "no-store"`. |
+| **Backend Middlewares** | `verifyToken`, `verifyRole` | ✅ Done | **Challenge 2**: Express middlewares (`verifyToken`, `verifyStudent`, `verifyTutor`, `verifyAdmin`) verifying `session` collection token and attaching `req.user`. |
 | **Seed Data** | Script / Endpoint | ❌ Pending | 10-12 realistic tuition listings for rich display. |
 
 ---
@@ -215,7 +216,7 @@ interface Payment {
 ## 🏆 Mandatory & Optional Challenges Checklist
 
 - [x] **Challenge 1: Server-Side Search & Filter on `/tuitions`** (Implemented in `index.js` and `app/tuitions/page.tsx`).
-- [ ] **Challenge 2: JWT Token Verification & Role-Based Middlewares** (Needs Express middleware setup).
+- [x] **Challenge 2: JWT / Session Token Verification & Role-Based Middlewares** (Implemented across `mentorlagbe-server` and `mentorlagbe-client` with `verifyToken`, `verifyStudent`, `verifyTutor`, `verifyAdmin`, and `authFetch`).
 - [x] **Challenge 3: Image Uploading via ImgBB API** (Implemented in both `post-tuition` and `/dashboard/profile`).
 - [x] **Optional 1: Server-Side Pagination** (Implemented on `/tuitions`).
 - [ ] **Optional 2: Realistic Seed Script** (To populate 10-12 sample tuitions across subjects).

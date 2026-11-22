@@ -1,11 +1,13 @@
 "use server"
+
 import { ITuition } from "@/types"
+import { authFetch } from "./server"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-// টিউশন তৈরি করার জন্য।
+// ১. নতুন টিউশন তৈরি করার জন্য (টিউটর authFetch দিয়ে টোকেন সহ)
 export const createTuition = async (data: Omit<ITuition, "_id"> | ITuition) => {
-  const res = await fetch(`${BASE_URL}/tuitions`, {
+  const res = await authFetch(`${BASE_URL}/tuitions`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -15,20 +17,20 @@ export const createTuition = async (data: Omit<ITuition, "_id"> | ITuition) => {
   return res.json()
 }
 
-// টিউশন ডিলিট করার জন্য।
+// ২. টিউশন ডিলিট করার জন্য (টিউটর authFetch দিয়ে টোকেন সহ)
 export const deleteTuition = async (tuitionId: string) => {
-  const res = await fetch(`${BASE_URL}/tuitions/${tuitionId}`, {
+  const res = await authFetch(`${BASE_URL}/tuitions/${tuitionId}`, {
     method: "DELETE",
   })
   return res.json()
 }
 
-// টিউশন আপডেট করার জন্য।
+// ৩. টিউশন এডিট ও এক্টিভ/ক্লোজড আপডেট করার জন্য (টিউটর)
 export const updateTuition = async (
   tuitionId: string,
   updatedData: Partial<ITuition>
 ) => {
-  const res = await fetch(`${BASE_URL}/tuitions/${tuitionId}`, {
+  const res = await authFetch(`${BASE_URL}/tuitions/${tuitionId}`, {
     method: "PATCH",
     headers: {
       "content-type": "application/json",
@@ -38,12 +40,12 @@ export const updateTuition = async (
   return res.json()
 }
 
-// টিউশনের অ্যাপ্রুভাল স্ট্যাটাস আপডেট করার জন্য (অ্যাডমিন মডারেশন)
+// ৪. টিউশনের অ্যাপ্রুভাল স্ট্যাটাস আপডেট করার জন্য (অ্যাডমিন মডারেশন)
 export const updateTuitionStatus = async (
   tuitionId: string,
   status: "approved" | "rejected" | "pending"
 ) => {
-  const res = await fetch(`${BASE_URL}/tuitions/${tuitionId}/status`, {
+  const res = await authFetch(`${BASE_URL}/tuitions/${tuitionId}/status`, {
     method: "PATCH",
     headers: {
       "content-type": "application/json",
@@ -53,13 +55,10 @@ export const updateTuitionStatus = async (
   return res.json()
 }
 
-// টিউশন কাউন্ট করার জন্য এপিআই।
+// ৫. নির্দিষ্ট টিউটরের সর্বমোট পোস্ট সংখ্যা কাউন্ট করার এপিআই
 export const getTuitionsCount = async (tutorEmail: string) => {
-  const res = await fetch(
-    `${BASE_URL}/tuitions/count?tutorEmail=${tutorEmail}`,
-    {
-      cache: "no-store",
-    }
+  const res = await authFetch(
+    `${BASE_URL}/tuitions/count?tutorEmail=${tutorEmail}`
   )
   return res.json()
 }

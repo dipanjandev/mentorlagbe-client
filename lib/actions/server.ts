@@ -11,6 +11,27 @@ export const getSession = async () => {
   return session
 }
 
+export const getToken = async () => {
+  const session = await getSession()
+  if (!session || !session?.session?.token) {
+    redirect("/unauthorized")
+  }
+  return session.session.token
+}
+
+export const authFetch = async (api: string, init?: RequestInit) => {
+  const token = await getToken()
+  const res = await fetch(api, {
+    ...init,
+    headers: {
+      ...init?.headers,
+      authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  })
+  return res
+}
+
 // সার্ভার থেকে সেশন আনার জন্য এই ফাংশন লিখা হয়েছে।
 export const requireRole = async (role: string) => {
   const session = await getSession()
