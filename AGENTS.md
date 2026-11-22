@@ -158,9 +158,9 @@ interface Payment {
 | :--- | :--- | :---: | :--- |
 | `components/NavBar.tsx` | Header navigation | 🟡 Needs tweak | Needs Theme Toggle (Dark/Light) and link update for `/dashboard/profile`. |
 | `components/Footer.tsx` | Footer navigation & brand | ❌ Missing | Needs logo, tagline, links, contact, copyright, & **new 𝕏 logo**. |
-| `app/loading.tsx` | Global loading skeleton / spinner | ❌ Missing | Required for 100% mark. |
-| `app/not-found.tsx` | Custom 404 page | ❌ Missing | Required with "Back to Home" button. |
-| `app/error.tsx` | Custom error boundary | ❌ Missing | Required with "Back to Home" button. |
+| `app/loading.tsx` | Global loading skeleton / spinner | ✅ Done | Modern pulsing spinner with brand accent & shimmer bar. |
+| `app/not-found.tsx` | Custom 404 page | ✅ Done | Modern 404 page with 'Back to Home' & 'Browse Tuitions' buttons. |
+| `app/error.tsx` | Custom error boundary | ✅ Done | Error boundary with 'Try Again' & 'Back to Home' buttons. |
 
 ### Student Dashboard (`/dashboard/student`)
 | Route | Feature | Status | Notes |

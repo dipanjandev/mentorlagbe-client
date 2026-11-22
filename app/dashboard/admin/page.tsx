@@ -24,13 +24,17 @@ const AdminDashboardPage = async () => {
   let allPayments: IPayment[] = []
 
   try {
+    // promise.all দিয়ে একই সময়ে ৩টি ব্যাকএন্ড রাউটে রিকোয়েস্ট পাঠানো হয়।
     const [usersData, tuitionsData, paymentsData] = await Promise.all([
+      // ব্যাকএন্ড থেকে ডাটা আসে এপিআই এর মাধ্যমে আগে আমরা যে এপিআই বানিয়ে রেখেছিলাম।
       getAllUsers().catch(() => []),
       getTutionApi("isAdmin=true").catch(() => ({ tuitions: [] })),
       getAllPayments().catch(() => []),
     ])
     allUsers = Array.isArray(usersData) ? usersData : []
-    allTuitions = Array.isArray(tuitionsData?.tuitions) ? tuitionsData.tuitions : []
+    allTuitions = Array.isArray(tuitionsData?.tuitions)
+      ? tuitionsData.tuitions
+      : []
     allPayments = Array.isArray(paymentsData) ? paymentsData : []
   } catch (err) {
     console.error("Error loading admin overview:", err)
@@ -56,7 +60,7 @@ const AdminDashboardPage = async () => {
   return (
     <div className="space-y-8 p-4 md:p-8">
       {/* ১. ওয়েলকাম হেডার সেকশন */}
-      <div className="flex flex-col justify-between gap-4 rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6 sm:flex-row sm:items-center">
+      <div className="flex flex-col justify-between gap-4 rounded-2xl border border-primary/20 bg-linear-to-r from-primary/10 via-primary/5 to-transparent p-6 sm:flex-row sm:items-center">
         <div>
           <div className="flex items-center gap-2">
             <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-xs">
@@ -67,7 +71,8 @@ const AdminDashboardPage = async () => {
             </h1>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Monitor users, moderate tuition batches, and track Stripe subscription revenue.
+            Monitor users, moderate tuition batches, and track Stripe
+            subscription revenue.
           </p>
         </div>
 
@@ -89,7 +94,7 @@ const AdminDashboardPage = async () => {
         {/* Card 1: Total Platform Users */}
         <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-2xs transition hover:border-primary/30">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
               Total Users
             </p>
             <span className="flex size-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -107,7 +112,7 @@ const AdminDashboardPage = async () => {
         {/* Card 2: Total Tutors */}
         <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-2xs transition hover:border-blue-500/30">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
               Total Tutors
             </p>
             <span className="flex size-9 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
@@ -125,7 +130,7 @@ const AdminDashboardPage = async () => {
         {/* Card 3: Pending vs Approved Tuitions */}
         <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-2xs transition hover:border-emerald-500/30">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
               Tuitions (Live/Pending)
             </p>
             <span className="flex size-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
@@ -148,7 +153,7 @@ const AdminDashboardPage = async () => {
         {/* Card 4: Total Stripe Revenue */}
         <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-2xs transition hover:border-amber-500/30">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
               Stripe Revenue
             </p>
             <span className="flex size-9 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
@@ -184,7 +189,8 @@ const AdminDashboardPage = async () => {
                 User Management
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                Inspect platform accounts, change roles (Student, Tutor, Admin), and manage permissions.
+                Inspect platform accounts, change roles (Student, Tutor, Admin),
+                and manage permissions.
               </p>
             </div>
             <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-primary">
@@ -199,14 +205,15 @@ const AdminDashboardPage = async () => {
             className="group flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-2xs transition hover:border-primary/40 hover:shadow-xs"
           >
             <div>
-              <span className="flex size-10 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 transition group-hover:scale-105">
+              <span className="flex size-10 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 transition group-hover:scale-105 dark:text-amber-400">
                 <CheckSquare className="size-5" />
               </span>
               <h3 className="mt-4 text-base font-bold text-foreground">
                 Tuition Approval
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                Review submitted batches, check tutor availability, and approve or reject listings.
+                Review submitted batches, check tutor availability, and approve
+                or reject listings.
               </p>
             </div>
             <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
@@ -221,14 +228,15 @@ const AdminDashboardPage = async () => {
             className="group flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6 shadow-2xs transition hover:border-primary/40 hover:shadow-xs"
           >
             <div>
-              <span className="flex size-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 transition group-hover:scale-105">
+              <span className="flex size-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 transition group-hover:scale-105 dark:text-emerald-400">
                 <CreditCard className="size-5" />
               </span>
               <h3 className="mt-4 text-base font-bold text-foreground">
                 Transactions
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                View verified Stripe Checkout payment records for Tutor and Student Pro upgrades.
+                View verified Stripe Checkout payment records for Tutor and
+                Student Pro upgrades.
               </p>
             </div>
             <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
