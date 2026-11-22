@@ -31,9 +31,9 @@ const HeroSection: React.FC = () => {
   const popularTags = ["Higher Math", "Physics", "IELTS", "HSC Bangla", "ICT"]
 
   return (
-    <section className="relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-primary/5 via-background to-background py-16 sm:py-24">
+    <section className="relative overflow-hidden border-b border-border/60 bg-linear-to-t from-primary/5 via-background to-background py-16 sm:py-24">
       {/* ব্যাকগ্রাউন্ড ডেকোরেটিভ গ্লো */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl sm:size-[36rem]"></div>
+      <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl sm:size-144"></div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
@@ -56,8 +56,9 @@ const HeroSection: React.FC = () => {
 
             {/* সাব-হেডলাইন */}
             <p className="mt-4 text-base text-muted-foreground sm:text-lg sm:leading-relaxed">
-              Connect with verified subject specialists across Bangladesh for personalized home tuition
-              and interactive online batches. Designed to elevate grades and build true academic mastery.
+              Connect with verified subject specialists across Bangladesh for
+              personalized home tuition and interactive online batches. Designed
+              to elevate grades and build true academic mastery.
             </p>
 
             {/* সার্চ ফর্ম */}
@@ -91,7 +92,9 @@ const HeroSection: React.FC = () => {
                 <button
                   key={tag}
                   type="button"
-                  onClick={() => router.push(`/tuitions?search=${encodeURIComponent(tag)}`)}
+                  onClick={() =>
+                    router.push(`/tuitions?search=${encodeURIComponent(tag)}`)
+                  }
                   className="rounded-lg border border-border/80 bg-muted/40 px-2.5 py-1 text-xs text-foreground transition hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
                 >
                   {tag}
@@ -102,15 +105,21 @@ const HeroSection: React.FC = () => {
             {/* ৩টি ট্রাস্ট হাইলাইটস */}
             <div className="mt-10 grid grid-cols-3 gap-4 border-t border-border/60 pt-6 text-left">
               <div>
-                <p className="text-2xl font-extrabold text-foreground">1,500+</p>
-                <p className="text-xs text-muted-foreground">Verified Mentors</p>
+                <p className="text-2xl font-extrabold text-foreground">
+                  1,500+
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Verified Mentors
+                </p>
               </div>
               <div>
                 <p className="text-2xl font-extrabold text-foreground">100%</p>
                 <p className="text-xs text-muted-foreground">Admin Moderated</p>
               </div>
               <div>
-                <p className="text-2xl font-extrabold text-foreground">Online/Offline</p>
+                <p className="text-2xl font-extrabold text-foreground">
+                  Online/Offline
+                </p>
                 <p className="text-xs text-muted-foreground">Flexible Modes</p>
               </div>
             </div>
@@ -127,17 +136,22 @@ const HeroSection: React.FC = () => {
                       <GraduationCap className="size-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-foreground">HSC Physics Batch 2026</h4>
-                      <p className="text-xs text-muted-foreground">Online • 3 Days/Week</p>
+                      <h4 className="text-sm font-bold text-foreground">
+                        HSC Physics Batch 2026
+                      </h4>
+                      <p className="text-xs text-muted-foreground">
+                        Online • 3 Days/Week
+                      </p>
                     </div>
                   </div>
                   <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">
                     $25/mo
                   </span>
                 </div>
-                <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground border-t border-border/60 pt-3">
+                <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-3 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
-                    <CheckCircle2 className="size-3.5 text-primary" /> Verified BUET Mentor
+                    <CheckCircle2 className="size-3.5 text-primary" /> Verified
+                    BUET Mentor
                   </span>
                   <span className="font-semibold text-primary">Accepting</span>
                 </div>
@@ -151,19 +165,26 @@ const HeroSection: React.FC = () => {
                       <Users className="size-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-foreground">IELTS Academic Masterclass</h4>
-                      <p className="text-xs text-muted-foreground">Band 8.0+ Target • Interactive</p>
+                      <h4 className="text-sm font-bold text-foreground">
+                        IELTS Academic Masterclass
+                      </h4>
+                      <p className="text-xs text-muted-foreground">
+                        Band 8.0+ Target • Interactive
+                      </p>
                     </div>
                   </div>
                   <span className="rounded-full bg-blue-500/10 px-2.5 py-0.5 text-xs font-bold text-blue-600 dark:text-blue-400">
                     $35/mo
                   </span>
                 </div>
-                <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground border-t border-border/60 pt-3">
+                <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-3 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
-                    <ShieldCheck className="size-3.5 text-blue-600" /> Pro Certified Mentor
+                    <ShieldCheck className="size-3.5 text-blue-600" /> Pro
+                    Certified Mentor
                   </span>
-                  <span className="font-semibold text-blue-600">4 Seats Left</span>
+                  <span className="font-semibold text-blue-600">
+                    4 Seats Left
+                  </span>
                 </div>
               </div>
 
@@ -171,17 +192,19 @@ const HeroSection: React.FC = () => {
               <div className="flex items-center justify-between rounded-2xl border border-border/80 bg-muted/40 p-4">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
-                    <div className="flex size-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground border-2 border-background">
+                    <div className="flex size-8 items-center justify-center rounded-full border-2 border-background bg-primary text-xs font-bold text-primary-foreground">
                       S1
                     </div>
-                    <div className="flex size-8 items-center justify-center rounded-full bg-blue-500 text-xs font-bold text-white border-2 border-background">
+                    <div className="flex size-8 items-center justify-center rounded-full border-2 border-background bg-blue-500 text-xs font-bold text-white">
                       S2
                     </div>
-                    <div className="flex size-8 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white border-2 border-background">
+                    <div className="flex size-8 items-center justify-center rounded-full border-2 border-background bg-amber-500 text-xs font-bold text-white">
                       S3
                     </div>
                   </div>
-                  <span className="text-xs font-semibold text-foreground">5,000+ Enrolled Students</span>
+                  <span className="text-xs font-semibold text-foreground">
+                    5,000+ Enrolled Students
+                  </span>
                 </div>
                 <Link
                   href="/tuitions"

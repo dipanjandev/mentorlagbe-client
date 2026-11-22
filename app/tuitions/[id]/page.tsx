@@ -53,26 +53,29 @@ const TuitionDetailsPage = async ({ params }: TuitionDetailsPageProps) => {
 
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
+      {/* Seamless Header & Floating Navbar Wrapper */}
+      <div className="border-b border-border/70 bg-muted/20">
+        <NavBar />
 
-      {/* Top Breadcrumb Bar */}
-      <div className="border-b border-border/60 bg-muted/20 py-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/tuitions"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition hover:text-primary"
-          >
-            <ArrowLeft className="size-3.5" />
-            <span>Back to Browse Tuitions</span>
-          </Link>
-
-          <div className="flex items-center gap-2">
-            <Badge
-              variant={tuition.isActive ? "default" : "secondary"}
-              className="text-xs"
+        {/* Top Breadcrumb Bar */}
+        <div className="pt-2 pb-4">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <Link
+              href="/tuitions"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition hover:text-primary"
             >
-              {tuition.isActive ? "Accepting Students" : "Batch Closed"}
-            </Badge>
+              <ArrowLeft className="size-3.5" />
+              <span>Back to Browse Tuitions</span>
+            </Link>
+
+            <div className="flex items-center gap-2">
+              <Badge
+                variant={tuition.isActive ? "default" : "secondary"}
+                className="text-xs"
+              >
+                {tuition.isActive ? "Accepting Students" : "Batch Closed"}
+              </Badge>
+            </div>
           </div>
         </div>
       </div>

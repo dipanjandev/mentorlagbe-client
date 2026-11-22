@@ -60,42 +60,45 @@ const BrowseTuitionsPage = async ({
 
   return (
     <div className="min-h-screen bg-background">
-      <NavBar />
-      {/* Hero / Header Section */}
-      <section className="border-b border-border/80 bg-muted/20 py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
-            <div className="space-y-2">
-              <div className="flex items-center justify-center gap-2 md:justify-start">
-                <Badge
-                  variant="outline"
-                  className="gap-1 border-primary/20 bg-primary/5 py-1 text-primary"
-                >
-                  <Sparkles className="size-3" />
-                  <span>Verified Tutors & Mentorship</span>
-                </Badge>
+      {/* Seamless Header & Floating Navbar Wrapper */}
+      <div className="border-b border-border/70 bg-muted/20">
+        <NavBar />
+        {/* Hero / Header Section */}
+        <section className="pt-2 pb-10 sm:pb-12">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+              <div className="space-y-2">
+                <div className="flex items-center justify-center gap-2 md:justify-start">
+                  <Badge
+                    variant="outline"
+                    className="gap-1 border-primary/20 bg-primary/5 py-1 text-primary"
+                  >
+                    <Sparkles className="size-3" />
+                    <span>Verified Tutors & Mentorship</span>
+                  </Badge>
+                </div>
+                <h1 className="text-3xl font-extrabold tracking-tight text-green-600 dark:text-green-400 sm:text-4xl">
+                  Browse Tuitions & Batches
+                </h1>
+                <p className="max-w-2xl text-sm text-muted-foreground">
+                  Find expert tutors by class level, subject, and mode (Online or
+                  Offline) to elevate your academic goals.
+                </p>
               </div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-green-600 sm:text-4xl">
-                Browse Tuitions & Batches
-              </h1>
-              <p className="max-w-2xl text-sm text-muted-foreground">
-                Find expert tutors by class level, subject, and mode (Online or
-                Offline) to elevate your academic goals.
-              </p>
-            </div>
 
-            {/* Total Active Count Badge */}
-            <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-xs">
-              <span className="text-2xl font-bold text-primary">
-                {totalResults}
-              </span>
-              <p className="text-xs font-medium text-muted-foreground">
-                Available Tuitions
-              </p>
+              {/* Total Active Count Badge */}
+              <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-xs">
+                <span className="text-2xl font-bold text-primary">
+                  {totalResults}
+                </span>
+                <p className="text-xs font-medium text-muted-foreground">
+                  Available Tuitions
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Main Content Layout */}
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">

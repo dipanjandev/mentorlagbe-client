@@ -36,9 +36,8 @@ export default async function Page() {
 
   return (
     <div className="flex min-h-screen flex-col justify-between bg-background">
-      <NavBar />
-
       <main className="flex-1">
+        <NavBar />
         {/* 1. Hero Section */}
         <HeroSection />
 
@@ -56,9 +55,8 @@ export default async function Page() {
 
         {/* 6. Platform Stats & Verified Reviews */}
         <PlatformStatsSection />
+        <Footer />
       </main>
-
-      <Footer />
     </div>
   )
 }

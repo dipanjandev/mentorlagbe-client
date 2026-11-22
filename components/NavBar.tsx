@@ -33,9 +33,9 @@ const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full px-3 py-2.5 sm:px-6 transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full px-3 pt-3 pb-2 sm:px-6 pointer-events-none transition-all duration-300">
       {/* মেইন ফ্লোটিং গ্লাস বার */}
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl border border-border/80 bg-background/85 px-4 sm:px-6 shadow-sm shadow-foreground/5 backdrop-blur-xl transition-all duration-300 hover:shadow-md dark:border-border/60 dark:bg-card/80 dark:shadow-none">
+      <div className="pointer-events-auto mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl border border-border/80 bg-background/85 px-4 sm:px-6 shadow-sm shadow-foreground/5 backdrop-blur-xl transition-all duration-300 hover:shadow-md dark:border-border/60 dark:bg-card/85 dark:shadow-none">
         {/* বামে: Brand Logo */}
         <div className="flex items-center gap-2">
           <Logo />

@@ -205,111 +205,114 @@ const PricingPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navbar */}
-      <NavBar />
+      {/* Seamless Header & Floating Navbar Wrapper */}
+      <div className="border-b border-border/70 bg-muted/20">
+        {/* Navbar */}
+        <NavBar />
 
-      {/* 1. Hero Header Section with Conditional Greeting */}
-      <section className="relative overflow-hidden border-b border-border/80 bg-muted/20 py-16 text-center">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          {/* Conditional Role Badge */}
-          {isAdmin ? (
-            <Badge
-              variant="outline"
-              className="gap-1.5 border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400"
-            >
-              <ShieldAlert className="size-3.5" />
-              <span>Admin Platform Oversight (Inspection Mode)</span>
-            </Badge>
-          ) : isTutor ? (
-            <Badge
-              variant="outline"
-              className="gap-1.5 border-primary/20 bg-primary/5 px-3.5 py-1 text-xs font-semibold text-primary"
-            >
-              <UserCheck className="size-3.5" />
-              <span>Tutor Membership Plans</span>
-            </Badge>
-          ) : isStudent ? (
-            <Badge
-              variant="outline"
-              className="gap-1.5 border-primary/20 bg-primary/5 px-3.5 py-1 text-xs font-semibold text-primary"
-            >
-              <UserCheck className="size-3.5" />
-              <span>Student Academic Plans</span>
-            </Badge>
-          ) : (
-            <Badge
-              variant="outline"
-              className="gap-1.5 border-primary/20 bg-primary/5 px-3.5 py-1 text-xs font-semibold text-primary"
-            >
-              <Sparkles className="size-3.5" />
-              <span>Simple, Transparent Pricing</span>
-            </Badge>
-          )}
+        {/* 1. Hero Header Section with Conditional Greeting */}
+        <section className="relative overflow-hidden pt-2 pb-12 sm:pb-16 text-center">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            {/* Conditional Role Badge */}
+            {isAdmin ? (
+              <Badge
+                variant="outline"
+                className="gap-1.5 border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400"
+              >
+                <ShieldAlert className="size-3.5" />
+                <span>Admin Platform Oversight (Inspection Mode)</span>
+              </Badge>
+            ) : isTutor ? (
+              <Badge
+                variant="outline"
+                className="gap-1.5 border-primary/20 bg-primary/5 px-3.5 py-1 text-xs font-semibold text-primary"
+              >
+                <UserCheck className="size-3.5" />
+                <span>Tutor Membership Plans</span>
+              </Badge>
+            ) : isStudent ? (
+              <Badge
+                variant="outline"
+                className="gap-1.5 border-primary/20 bg-primary/5 px-3.5 py-1 text-xs font-semibold text-primary"
+              >
+                <UserCheck className="size-3.5" />
+                <span>Student Academic Plans</span>
+              </Badge>
+            ) : (
+              <Badge
+                variant="outline"
+                className="gap-1.5 border-primary/20 bg-primary/5 px-3.5 py-1 text-xs font-semibold text-primary"
+              >
+                <Sparkles className="size-3.5" />
+                <span>Simple, Transparent Pricing</span>
+              </Badge>
+            )}
 
-          {/* Conditional Heading */}
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            {isAdmin
-              ? "All Platform Pricing & Subscription Plans"
-              : isTutor
-                ? `Welcome, ${userName || "Tutor"} — Scale Your Mentorship`
-                : isStudent
-                  ? `Welcome, ${userName || "Student"} — Accelerate Your Learning`
-                  : "Upgrade Your Learning & Teaching Experience"}
-          </h1>
+            {/* Conditional Heading */}
+            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+              {isAdmin
+                ? "All Platform Pricing & Subscription Plans"
+                : isTutor
+                  ? `Welcome, ${userName || "Tutor"} — Scale Your Mentorship`
+                  : isStudent
+                    ? `Welcome, ${userName || "Student"} — Accelerate Your Learning`
+                    : "Upgrade Your Learning & Teaching Experience"}
+            </h1>
 
-          {/* Conditional Subtitle */}
-          <p className="mt-4 text-sm text-muted-foreground sm:text-base">
-            {isAdmin
-              ? "Viewing all tutor and student subscription plans. Admin accounts have full management oversight across the platform."
-              : isTutor
-                ? "Upgrade to Pro Tutor ($15/mo) to unlock unlimited tuition listings, verified educator badge, and priority student applicants."
-                : isStudent
-                  ? "Upgrade to Pro Student ($10/mo) for priority booking review guarantee, verified student status, and dedicated assistance."
-                  : "No hidden fees. Free tier available for everyone. Upgrade to Pro via Stripe to unlock unlimited posts, verified badges, and priority booking."}
-          </p>
+            {/* Conditional Subtitle */}
+            <p className="mt-4 text-sm text-muted-foreground sm:text-base">
+              {isAdmin
+                ? "Viewing all tutor and student subscription plans. Admin accounts have full management oversight across the platform."
+                : isTutor
+                  ? "Upgrade to Pro Tutor ($15/mo) to unlock unlimited tuition listings, verified educator badge, and priority student applicants."
+                  : isStudent
+                    ? "Upgrade to Pro Student ($10/mo) for priority booking review guarantee, verified student status, and dedicated assistance."
+                    : "No hidden fees. Free tier available for everyone. Upgrade to Pro via Stripe to unlock unlimited posts, verified badges, and priority booking."}
+            </p>
 
-          {/* Role Filter Tabs (Only shown for Guests and Admins) */}
-          {(isGuest || isAdmin) && (
-            <div className="mt-8 flex justify-center">
-              <div className="inline-flex rounded-xl border border-border bg-card p-1 shadow-xs">
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole("all")}
-                  className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
-                    selectedRole === "all"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  All Plans
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole("tutor")}
-                  className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
-                    selectedRole === "tutor"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  For Tutors ($15/mo)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole("student")}
-                  className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
-                    selectedRole === "student"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  For Students ($10/mo)
-                </button>
+            {/* Role Filter Tabs (Only shown for Guests and Admins) */}
+            {(isGuest || isAdmin) && (
+              <div className="mt-8 flex justify-center">
+                <div className="inline-flex rounded-xl border border-border bg-card p-1 shadow-xs">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedRole("all")}
+                    className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
+                      selectedRole === "all"
+                        ? "bg-primary text-primary-foreground shadow-xs"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    All Plans
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedRole("tutor")}
+                    className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
+                      selectedRole === "tutor"
+                        ? "bg-primary text-primary-foreground shadow-xs"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    For Tutors ($15/mo)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedRole("student")}
+                    className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
+                      selectedRole === "student"
+                        ? "bg-primary text-primary-foreground shadow-xs"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    For Students ($10/mo)
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      </section>
+            )}
+          </div>
+        </section>
+      </div>
 
       {/* 2. Pricing Cards Grid */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
