@@ -1,13 +1,34 @@
 import Link from "next/link"
+import { headers } from "next/headers"
 import { BookOpen, PlusCircle } from "lucide-react"
 import { MyTuitionsTable } from "@/components/tutor/MyTuitionsTable"
 import { getTutionApi } from "@/lib/api/getTuition"
+import { auth } from "@/lib/auth"
+import { ITuition } from "@/types"
 
+/**
+ * MyTuitionsPage (Tutor Dashboard)
+ *
+ * শুধুমাত্র লগইন করা নির্দিষ্ট টিউটরের তৈরি করা টিউশন ব্যাচগুলো ডাটাবেজ থেকে ফেচ করে
+ * এবং এডিট, ডিলিট ও এক্টিভ/ক্লোজড স্ট্যাটাস নিয়ন্ত্রণের টেবিলে রেন্ডার করে।
+ */
 const MyTuitionsPage = async () => {
-  // TODO: Fetch real tuitions created by the logged-in tutor on the server
-  const data = await getTutionApi()
-  //   console.log(tuitions)
-  const tuitionsList = Array.isArray(data?.tuitions) ? data.tuitions : []
+  // ১. লগইন করা টিউটরের সেশন ও ইমেইল সংগ্রহ করা
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  })
+  const email = session?.user?.email
+
+  // ২. শুধুমাত্র এই টিউটরের ইমেইল দিয়ে ফিল্টার করে তার নিজস্ব টিউশনগুলো ফেচ করা
+  let tuitionsList: ITuition[] = []
+  if (email) {
+    try {
+      const data = await getTutionApi(`tutorEmail=${email}`)
+      tuitionsList = Array.isArray(data?.tuitions) ? data.tuitions : []
+    } catch (error) {
+      console.error("Error fetching tutor tuitions:", error)
+    }
+  }
 
   return (
     <div className="p-8">
@@ -37,6 +58,7 @@ const MyTuitionsPage = async () => {
           <span>Post New Tuition</span>
         </Link>
       </div>
+
       {/* Reusable Client Component Table */}
       <MyTuitionsTable initialTuitions={tuitionsList} />
     </div>
