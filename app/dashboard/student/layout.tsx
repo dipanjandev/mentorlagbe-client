@@ -1,0 +1,14 @@
+import { requireRole } from "@/lib/actions/server"
+import React from "react"
+
+const StudentDashboardLayout = async ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
+  // এখানে বলা হল স্টুডেন্টের বাইরে আর কাউকে এলাউ করবা না। এটা আবার লিখে রেখেছি server.ts এর মধ্যে।
+  await requireRole("student")
+  return children
+}
+
+export default StudentDashboardLayout
