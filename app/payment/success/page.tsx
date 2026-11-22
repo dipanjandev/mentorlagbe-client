@@ -11,6 +11,7 @@ import {
 } from "lucide-react"
 import { verifyAndFulfillPayment } from "@/lib/actions/payment"
 import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
 
 interface SuccessPageProps {
   searchParams: Promise<{ session_id?: string }>
@@ -183,6 +184,7 @@ const SuccessPage = async ({ searchParams }: SuccessPageProps) => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

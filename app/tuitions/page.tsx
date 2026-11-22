@@ -8,6 +8,7 @@ import { TuitionFilters } from "@/components/tuitions/TuitionFilters"
 import { TuitionPagination } from "@/components/tuitions/TuitionPagination"
 import { Badge } from "@/components/ui/badge"
 import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
 
 interface BrowseTuitionsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -164,6 +165,7 @@ const BrowseTuitionsPage = async ({
           </main>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

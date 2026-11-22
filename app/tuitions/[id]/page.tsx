@@ -16,6 +16,7 @@ import {
 import { getSingleTuitionApi } from "@/lib/api/getTuition"
 import { Badge } from "@/components/ui/badge"
 import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
 import { ApplyTuitionModal } from "@/components/tuitions/ApplyTuitionModal"
 
 interface TuitionDetailsPageProps {
@@ -249,6 +250,7 @@ const TuitionDetailsPage = async ({ params }: TuitionDetailsPageProps) => {
           </aside>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

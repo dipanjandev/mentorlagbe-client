@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { AlertCircle, Home, Sparkles } from "lucide-react"
 import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
 
 const CancelPage = () => {
   return (
@@ -51,6 +52,7 @@ const CancelPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

@@ -7,6 +7,7 @@ import { PricingComparisonTable } from "@/components/pricing/PricingComparisonTa
 import { PricingFAQ } from "@/components/pricing/PricingFAQ"
 import { Badge } from "@/components/ui/badge"
 import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
 import { useSession } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -393,6 +394,8 @@ const PricingPage = () => {
           <PricingFAQ />
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }
