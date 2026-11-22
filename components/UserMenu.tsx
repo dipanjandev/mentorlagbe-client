@@ -4,6 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { LayoutDashboard, LogOut, User as UserIcon } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,89 +27,112 @@ interface UserMenuProps {
   }
 }
 
-const UserMenu = ({ user }: UserMenuProps) => {
+// রিকোয়ারমেন্ট অনুযায়ী Navbar State for Authenticated Users:
+// User Profile Image (Avatar), User Name & Role Badge (Student / Tutor / Admin),
+// 'Dashboard' link, 'Update Profile' link, and a 'Sign Out' button.
+const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
   const router = useRouter()
-  // TODO: এখানে signOut() ফাংশনালিটি লিখবে
+
   const handleLogout = async () => {
-    // console.log("Logout clicked")
-    await signOut({
-      // fetch অপশন যোগ করা হল কারণ আমি যেকোন পেজ থেকে লগ আউট করলে সরাসরি হোম পেজে যেন নিয়ে যায়।
-      fetchOptions: {
-        onSuccess: () => {
-          toast.success("Signed out successfully!")
-          router.push("/") // redirect to login page
+    try {
+      await signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Signed out successfully!")
+            router.push("/")
+            router.refresh()
+          },
         },
-      },
-    })
+      })
+    } catch (error) {
+      console.error("Sign out error:", error)
+      toast.error("Failed to sign out")
+    }
   }
+
+  const role = user?.role || "student"
+  const dashboardUrl = `/dashboard/${role}`
 
   return (
     <div className="flex items-center gap-3">
-      <span className="hidden text-sm font-medium text-slate-700 sm:inline">
-        Welcome,{" "}
-        <span className="font-semibold text-slate-900">{user?.name}</span>
-      </span>
+      {/* ইউজার নেম ও রোল ব্যাজ (ডেস্কটপে দৃশ্যমান) */}
+      <div className="hidden flex-col items-end sm:flex">
+        <span className="text-xs font-semibold text-foreground">
+          {user?.name || "User"}
+        </span>
+        <span className="mt-0.5 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-2 py-0.2 text-[10px] font-bold text-primary uppercase">
+          {role}
+        </span>
+      </div>
 
       <DropdownMenu>
-        <DropdownMenuTrigger className="cursor-pointer rounded-full ring-2 ring-green-600/20 transition outline-none hover:ring-green-600">
+        {/* প্রোফাইল অবতার ট্রিগার */}
+        <DropdownMenuTrigger className="group relative flex cursor-pointer items-center gap-2 rounded-full ring-2 ring-primary/20 transition outline-none hover:ring-primary">
           <Avatar className="h-9 w-9">
             <AvatarImage
               src={user?.image || ""}
               alt={user?.name || "User"}
               className="object-cover"
             />
-            <AvatarFallback className="bg-green-100 font-semibold text-green-700">
-              {user?.name?.charAt(0)?.toUpperCase() || "U"}
+            <AvatarFallback className="bg-primary/10 font-bold text-primary">
+              {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="end" className="w-56">
+        {/* ড্রপডাউন মেনু */}
+        <DropdownMenuContent align="end" className="w-56 p-1.5 shadow-lg">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="font-normal">
+            <DropdownMenuLabel className="font-normal p-2">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm leading-none font-semibold text-slate-900">
+                <p className="text-sm font-semibold leading-none text-foreground">
                   {user?.name}
                 </p>
-                <p className="text-xs leading-none text-slate-500">
+                <p className="text-xs leading-none text-muted-foreground truncate">
                   {user?.email}
                 </p>
-                {user?.role && (
-                  <span className="mt-1 inline-block w-fit rounded bg-green-50 px-2 py-0.5 text-[10px] font-semibold text-green-700 uppercase">
-                    {user.role}
-                  </span>
-                )}
+                <div className="pt-1">
+                  <Badge variant="outline" className="text-[10px] font-bold uppercase py-0 px-2">
+                    {role}
+                  </Badge>
+                </div>
               </div>
             </DropdownMenuLabel>
           </DropdownMenuGroup>
 
           <DropdownMenuSeparator />
 
+          {/* ১. Dashboard Link */}
           <DropdownMenuItem className="cursor-pointer">
             <Link
-              href={`/dashboard/${user?.role}`}
-              className="flex items-center gap-2"
+              href={dashboardUrl}
+              className="flex w-full items-center gap-2.5 text-xs font-medium"
             >
-              <LayoutDashboard className="h-4 w-4 text-slate-500" />
+              <LayoutDashboard className="size-4 text-muted-foreground" />
               <span>Dashboard</span>
             </Link>
           </DropdownMenuItem>
 
+          {/* ২. Update Profile Link (Requirement matching) */}
           <DropdownMenuItem className="cursor-pointer">
-            <Link href="/profile" className="flex items-center gap-2">
-              <UserIcon className="h-4 w-4 text-slate-500" />
-              <span>Profile</span>
+            <Link
+              href="/dashboard/profile"
+              className="flex w-full items-center gap-2.5 text-xs font-medium"
+            >
+              <UserIcon className="size-4 text-muted-foreground" />
+              <span>Update Profile</span>
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
 
+          {/* ৩. Sign Out Button */}
           <DropdownMenuItem
             onClick={handleLogout}
-            className="cursor-pointer text-red-600 focus:bg-red-50 focus:text-red-600"
+            className="cursor-pointer text-destructive focus:bg-destructive/10 focus:text-destructive text-xs font-semibold"
           >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
+            <LogOut className="mr-2 size-4" />
+            <span>Sign Out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -165,13 +165,13 @@ interface Payment {
 ### Student Dashboard (`/dashboard/student`)
 | Route | Feature | Status | Notes |
 | :--- | :--- | :---: | :--- |
-| `/dashboard/student` | **Overview** | ⚠️ Placeholder | Currently `<h1>Student Dashboard Page</h1>`. Needs stats cards. |
+| `/dashboard/student` | **Overview** | ✅ Done | 4 stat cards (Total Applied, Accepted, Pending, Plan) + Recent Applications preview. |
 | `/dashboard/student/my-applications` | **My Applications** | ✅ Done | Table view with status badges and cancel action. |
 
 ### Tutor Dashboard (`/dashboard/tutor`)
 | Route | Feature | Status | Notes |
 | :--- | :--- | :---: | :--- |
-| `/dashboard/tutor` | **Overview** | ⚠️ Placeholder | Currently `<h1>Tutor Dashboard Page</h1>`. Needs stats cards. |
+| `/dashboard/tutor` | **Overview** | ✅ Done | 4 stat cards (Total Posted, Active/Approved, Applicants, Plan) + Recent Applicants preview. |
 | `/dashboard/tutor/post-tuition` | **Post Tuition** | ✅ Done | Validated form, ImgBB direct upload, free tier limit check (max 2). |
 | `/dashboard/tutor/my-tuitions` | **My Created Tuitions** | ✅ Done | Full CRUD: edit, delete, toggle active/closed. |
 | `/dashboard/tutor/applicants` | **Manage Applicants** | ✅ Done | Accept/Reject student applications. |
@@ -179,15 +179,15 @@ interface Payment {
 ### Admin Dashboard (`/dashboard/admin`)
 | Route | Feature | Status | Notes |
 | :--- | :--- | :---: | :--- |
-| `/dashboard/admin` | **Overview** | ⚠️ Placeholder | Currently `<h1>Admin Dashboard Page</h1>`. Needs stats cards. |
+| `/dashboard/admin` | **Overview** | ✅ Done | 4 platform stat cards (Users, Tutors, Pending/Approved Tuitions, Stripe Revenue) + Action Hub. |
 | `/dashboard/admin/users` | **User Management** | ✅ Done | Pure Shadcn UI, stat cards, role changer, delete, search/filters. |
 | `/dashboard/admin/tuitions` | **Tuition Approval Flow** | ✅ Done | Pure Shadcn UI, stat cards, approve/reject actions, filters. |
-| `/dashboard/admin/transactions` | **Transactions** | ❌ Missing | Table of Stripe payments from `/payments` endpoint. |
+| `/dashboard/admin/transactions` | **Transactions** | ✅ Done | Table of Stripe payments from `/payments` endpoint. |
 
 ### Shared Route (All Roles)
 | Route | Feature | Status | Notes |
 | :--- | :--- | :---: | :--- |
-| `/dashboard/profile` | **Update Profile** | ❌ Missing | Name, Phone, Bio, and ImgBB profile photo upload. |
+| `/dashboard/profile` | **Update Profile** | ✅ Done | Name, Phone, Bio, and direct ImgBB profile photo upload. |
 
 ### Backend API (`mentorlagbe-server`)
 | Endpoint | Method | Status | Notes |
@@ -216,7 +216,7 @@ interface Payment {
 
 - [x] **Challenge 1: Server-Side Search & Filter on `/tuitions`** (Implemented in `index.js` and `app/tuitions/page.tsx`).
 - [ ] **Challenge 2: JWT Token Verification & Role-Based Middlewares** (Needs Express middleware setup).
-- [x] **Challenge 3: Image Uploading via ImgBB API** (Implemented in `post-tuition`; needs adding to profile update).
+- [x] **Challenge 3: Image Uploading via ImgBB API** (Implemented in both `post-tuition` and `/dashboard/profile`).
 - [x] **Optional 1: Server-Side Pagination** (Implemented on `/tuitions`).
 - [ ] **Optional 2: Realistic Seed Script** (To populate 10-12 sample tuitions across subjects).
 - [ ] **Optional 4: Smooth Dark/Light Theme Switcher** (Theme provider exists; add toggle to Navbar).

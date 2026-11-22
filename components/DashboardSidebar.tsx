@@ -12,6 +12,7 @@ import {
   CreditCard,
   Home,
   LogOut,
+  User as UserIcon,
 } from "lucide-react"
 import {
   Sidebar,
@@ -168,6 +169,18 @@ const DashboardSidebar = () => {
 
       <SidebarFooter className="border-t border-border/60 bg-muted/20 p-3">
         <SidebarMenu className="gap-1">
+          {/* প্রোফাইল আপডেট করার জন্য বাটন */}
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              render={<Link href="/dashboard/profile" />}
+              tooltip="Update Profile"
+              className="h-9 rounded-lg px-3 font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <UserIcon className="size-4 shrink-0" />
+              <span>Update Profile</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
           {/* হোমে ব্যাক করার জন্য বাটন রাখা হয়েছে। */}
           <SidebarMenuItem>
             <SidebarMenuButton
