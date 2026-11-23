@@ -31,4 +31,24 @@ export const auth = betterAuth({
       },
     },
   },
+
+  // ব্যাকএন্ড লেভেল সিকিউরিটি গার্ড: কেউ বাইরে থেকে admin পাঠালেও গ্রহণ করবে না
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          // পাবলিক রেজিস্ট্রেশনে শুধুমাত্র student অথবা tutor অনুমোদনযোগ্য : টার্নারি অপারেটর এর মাধ্যমে এটাই বলা হচ্ছে।
+          const assignedRole = user.role === "tutor" ? "tutor" : "student"
+
+          return {
+            data: {
+              ...user,
+              role: assignedRole,
+              plan: "free",
+            },
+          }
+        },
+      },
+    },
+  },
 })

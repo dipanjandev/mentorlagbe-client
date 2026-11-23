@@ -6,7 +6,6 @@ import {
   UploadCloud,
   UserCheck,
   BookOpen,
-  ShieldCheck,
   ImageIcon,
 } from "lucide-react"
 import Logo from "@/components/Logo"
@@ -26,7 +25,7 @@ import { signUp } from "@/lib/auth-client"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
-type Role = "student" | "tutor" | "admin"
+type Role = "student" | "tutor"
 
 const SignUpPage = () => {
   const [role, setRole] = useState<Role>("student")
@@ -108,10 +107,10 @@ const SignUpPage = () => {
 
         <CardContent>
           <form onSubmit={handleSignUp} className="space-y-4">
-            {/* সবার উপরে: Role Selection Box (Student, Tutor, Admin) */}
+            {/* সবার উপরে: Role Selection Box (Student ও Tutor) */}
             <div className="space-y-2">
               <Label className="text-foreground">Select Account Role</Label>
-              <div className="grid grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setRole("student")}
@@ -136,19 +135,6 @@ const SignUpPage = () => {
                 >
                   <UserCheck className="h-4 w-4" />
                   <span>Tutor</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setRole("admin")}
-                  className={`flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl border p-3 text-xs font-semibold transition ${
-                    role === "admin"
-                      ? "border-green-600 bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300"
-                      : "border-border bg-card text-muted-foreground hover:border-green-300 dark:hover:border-green-700"
-                  }`}
-                >
-                  <ShieldCheck className="h-4 w-4" />
-                  <span>Admin</span>
                 </button>
               </div>
             </div>
