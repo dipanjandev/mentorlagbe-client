@@ -108,26 +108,26 @@ const PostTuitionPage = () => {
   }
 
   return (
-    <div className="w-full p-10">
+    <div className="w-full p-4 sm:p-6 lg:p-10">
       {/* Header Section */}
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
             <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
               <BookOpen className="size-5" />
             </span>
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
               Post a New Tuition
             </h1>
           </div>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
             Create a new subject batch or 1-on-1 mentorship listing for
             interested students.
           </p>
         </div>
 
         {/* Plan Limit Badge */}
-        <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
+        <div className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
           <Sparkles className="size-3.5" />
           {/* যদি প্রো হয় তাহলে আনলিমিটেড এর ব্যাচ দেখাবে না হলে পোষ্ট কাউন্ট হবে। */}
           <span>
@@ -139,7 +139,7 @@ const PostTuitionPage = () => {
       </div>
 
       {/* Main Form Container */}
-      <div className="rounded-2xl border border-border bg-card p-8 shadow-sm">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Section 1: Basic Information */}
           <div className="space-y-4">
@@ -152,9 +152,9 @@ const PostTuitionPage = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
               {/* Tuition Title */}
-              <div className="col-span-2 space-y-1.5">
+              <div className="col-span-1 space-y-1.5 sm:col-span-2">
                 <label
                   htmlFor="title"
                   className="text-sm font-medium text-foreground"
@@ -239,7 +239,7 @@ const PostTuitionPage = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
               {/* Mode */}
               <div className="space-y-1.5">
                 <label
@@ -357,16 +357,16 @@ const PostTuitionPage = () => {
                 </span>
               </label>
 
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                 <label
                   htmlFor="bannerImage"
-                  className="flex flex-1 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-input bg-muted/20 px-6 py-6 transition hover:border-primary hover:bg-muted/40"
+                  className="flex flex-1 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-input bg-muted/20 px-4 py-6 transition hover:border-primary hover:bg-muted/40 sm:px-6"
                 >
                   <Upload className="mb-2 size-8 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="text-center text-sm font-medium text-foreground">
                     Click to select an image
                   </span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-center text-xs text-muted-foreground">
                     PNG, JPG, or WEBP (Max 5MB)
                   </span>
                   <input
@@ -382,7 +382,7 @@ const PostTuitionPage = () => {
 
                 {/* Preview Box */}
                 {imagePreview && (
-                  <div className="relative size-28 overflow-hidden rounded-xl border border-border">
+                  <div className="relative mx-auto size-28 overflow-hidden rounded-xl border border-border sm:mx-0">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={imagePreview}

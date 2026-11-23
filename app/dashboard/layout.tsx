@@ -5,10 +5,19 @@ const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main className="w-full flex-1">
-        <SidebarTrigger />
-        {children}
-      </main>
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Mobile / Tablet Top Header with Sidebar Trigger */}
+        <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-border/70 bg-background/90 px-4 backdrop-blur-md md:hidden">
+          <SidebarTrigger />
+          <span className="text-sm font-semibold tracking-tight text-foreground">
+            MentorLagbe Workspace
+          </span>
+        </header>
+
+        <main className="w-full min-w-0 flex-1">
+          {children}
+        </main>
+      </div>
     </SidebarProvider>
   )
 }

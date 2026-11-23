@@ -37,19 +37,19 @@ const MyTuitionsPage = async () => {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       {/* Page Header (Server Rendered) */}
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
             <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
               <BookOpen className="size-5" />
             </span>
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
               My Created Tuitions
             </h1>
           </div>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
             Manage, edit, delete, and control the active availability of your
             posted tuition batches.
           </p>
@@ -58,7 +58,7 @@ const MyTuitionsPage = async () => {
         {/* Action Button */}
         <Link
           href="/dashboard/tutor/post-tuition"
-          className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90"
+          className="inline-flex w-fit items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 sm:px-5 sm:text-sm"
         >
           <PlusCircle className="size-4" />
           <span>Post New Tuition</span>
