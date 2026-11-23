@@ -33,9 +33,9 @@ const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full px-3 pt-3 pb-2 sm:px-6 pointer-events-none transition-all duration-300">
+    <header className="pointer-events-none sticky top-0 z-50 w-full px-3 pt-3 pb-2 transition-all duration-300 sm:px-6">
       {/* মেইন ফ্লোটিং গ্লাস বার */}
-      <div className="pointer-events-auto mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl border border-border/80 bg-background/85 px-4 sm:px-6 shadow-sm shadow-foreground/5 backdrop-blur-xl transition-all duration-300 hover:shadow-md dark:border-border/60 dark:bg-card/85 dark:shadow-none">
+      <div className="pointer-events-auto mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl border border-border/80 bg-background/85 px-4 shadow-sm shadow-foreground/5 backdrop-blur-xl transition-all duration-300 hover:shadow-md sm:px-6 dark:border-border/60 dark:bg-card/85 dark:shadow-none">
         {/* বামে: Brand Logo */}
         <div className="flex items-center gap-2">
           <Logo />
@@ -93,7 +93,7 @@ const NavBar = () => {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex size-9 items-center justify-center rounded-xl border border-border/70 bg-background/60 text-muted-foreground transition hover:bg-accent hover:text-foreground md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex size-9 items-center justify-center rounded-xl border border-border/70 bg-background/60 text-muted-foreground transition hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:hidden"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? (
@@ -107,7 +107,7 @@ const NavBar = () => {
 
       {/* Floating Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="mx-auto mt-2 max-w-7xl rounded-2xl border border-border/80 bg-background/95 p-4 shadow-xl backdrop-blur-xl md:hidden dark:bg-card/95 animate-in fade-in-50 slide-in-from-top-2 duration-200">
+        <div className="pointer-events-auto mx-auto mt-2 max-w-7xl animate-in rounded-2xl border border-border/80 bg-background/95 p-4 shadow-xl backdrop-blur-xl duration-200 fade-in-50 slide-in-from-top-2 md:hidden dark:bg-card/95">
           <nav className="flex flex-col space-y-1">
             {navLinks.map((link) => {
               const isActive =

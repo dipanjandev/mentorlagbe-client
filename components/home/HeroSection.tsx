@@ -48,7 +48,7 @@ const HeroSection: React.FC = () => {
             {/* মূল হেডলাইন */}
             <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               Find Your Ideal Tutor or{" "}
-              <span className="bg-gradient-to-r from-primary via-emerald-600 to-teal-500 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-primary via-emerald-600 to-teal-500 bg-clip-text text-transparent">
                 Mentorship Batch
               </span>{" "}
               Today
