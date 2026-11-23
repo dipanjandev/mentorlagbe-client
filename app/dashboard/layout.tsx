@@ -1,6 +1,9 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import DashboardSidebar from "@/components/DashboardSidebar"
 
+// Next.js-কে নির্দেশ দেওয়া হলো যেন ড্যাশবোর্ডের সব রাউট ডাইনামিকলি সার্ভারে রেন্ডার হয়
+export const dynamic = "force-dynamic"
+
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
@@ -14,9 +17,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           </span>
         </header>
 
-        <main className="w-full min-w-0 flex-1">
-          {children}
-        </main>
+        <main className="w-full min-w-0 flex-1">{children}</main>
       </div>
     </SidebarProvider>
   )
